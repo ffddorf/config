@@ -1,0 +1,6 @@
+---
+
+- name: Set up common configuration
+  hosts: all
+  roles:
+  - common
