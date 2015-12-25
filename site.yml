@@ -4,3 +4,8 @@
   hosts: all
   roles:
   - common
+
+- name: Configure monitoring
+  hosts: observium
+  roles:
+  - observium

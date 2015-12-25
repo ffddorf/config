@@ -1,0 +1,3 @@
+[submodule "roles/observium"]
+	path = roles/observium
+	url = https://github.com/nomaster/ansible-observium.git
