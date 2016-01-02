@@ -1,0 +1,15 @@
+---
+
+- name: Install package
+  apt: name=syslog-ng state=present
+
+- name: Configure service
+  template: src=syslog-ng.conf.j2 dest=/etc/syslog-ng/syslog-ng.conf
+  notify: restart syslog
+
+- name: Enable service
+  service: name=syslog-ng enabled=yes
+
+- name: Configure systemd journald
+  template: src=journald.conf.j2 dest=/etc/systemd/journald.conf
+  notify: restart journald

@@ -2,3 +2,4 @@
 
 - include: hostname.yml
 - include: snmpd.yml
+- include: syslog.yml
