@@ -1,0 +1,19 @@
+---
+
+gretun:
+  - interface: tun-ber-a
+    remote: 185.66.195.0
+    ip4: 100.64.2.253/31
+    ip6: 2a03:2260:0:188::2/64
+  - interface: tun-ber-b
+    remote: 185.66.195.1
+    ip4: 100.64.2.255/31
+    ip6: 2a03:2260:0:189::2/64
+  - interface: tun-dus-a
+    remote: 185.66.193.0
+    ip4: 100.64.3.1/31
+    ip6: 2a03:2260:0:18a::2/64
+  - interface: tun-dus-b
+    remote: 185.66.193.1
+    ip4: 100.64.3.3/31
+    ip6: 2a03:2260:0:18b::2/64

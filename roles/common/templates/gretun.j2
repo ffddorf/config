@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+
+{% for tun in gretun %}
+auto {{ tun.interface }}
+
+iface {{ tun.interface }} inet manual
+  pre-up ip tunnel add $IFACE mode gre remote {{ tun.remote }} local {{ ansible_default_ipv4.address }}
+  post-up ip link set dev $IFACE mtu 1400
+  post-up ip link set up dev $IFACE
+  post-down ip tunnel del $IFACE
+
+{% if tun.ip4 is defined %}
+iface {{ tun.interface }} inet static
+  address {{ tun.ip4 | ipv4('address') }}
+  netmask {{ tun.ip4 | ipv4('prefix') }}
+{% endif %}
+
+{% if tun.ip6 is defined %}
+iface {{ tun.interface }} inet6 static
+  address {{ tun.ip6 | ipv6('address') }}
+  netmask {{ tun.ip6 | ipv6('prefix') }}
+{% endif %}
+
+
+{% endfor%}
