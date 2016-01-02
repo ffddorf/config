@@ -3,9 +3,9 @@
 - name: Set up common configuration
   hosts: all
   roles:
-  - common
+  - { role: common, tags: common }
 
 - name: Configure monitoring
   hosts: observium
   roles:
-  - observium
+  - { role: observium, tags: observium }

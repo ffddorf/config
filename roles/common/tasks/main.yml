@@ -1,10 +1,4 @@
 ---
 
-- name: Set hostname
-  hostname: name={{ inventory_hostname }}
-
-- name: Configure hostsfile (IPv4)
-  lineinfile: line='{{ ansible_default_ipv4.address }} {{ ansible_nodename }}' dest=/etc/hosts regexp={{ ansible_default_ipv4.address }}
-
-- name: Configure hostsfile (IPv6)
-  lineinfile: line='{{ ansible_default_ipv6.address }} {{ ansible_nodename }}' dest=/etc/hosts regexp={{ ansible_default_ipv6.address }}
+- include: hostname.yml
+- include: snmpd.yml

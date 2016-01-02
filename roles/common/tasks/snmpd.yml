@@ -1,0 +1,13 @@
+---
+
+- include_vars: snmp_community.yml
+
+- name: Install package
+  apt: name=snmpd state=present
+
+- name: Configure service
+  template: src=snmpd.conf.j2 dest=/etc/snmp/snmpd.conf
+  notify: restart snmpd
+
+- name: Enable service
+  service: name=snmpd enabled=yes
