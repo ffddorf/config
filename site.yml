@@ -9,3 +9,8 @@
   hosts: observium
   roles:
   - { role: observium, tags: observium }
+
+- name: Configure edge routers
+  hosts: edge
+  roles:
+  - { role: edge, tags: edge }

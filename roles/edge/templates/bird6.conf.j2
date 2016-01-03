@@ -1,0 +1,42 @@
+# {{ ansible_managed }}
+
+router id {{ ansible_default_ipv4.address }};
+log syslog all;
+
+protocol kernel {
+  export all;
+  import all;
+  device routes;
+  kernel table 16;
+};
+
+protocol device {
+  scan time 8;
+};
+
+{% if local_as is defined %}
+
+filter local_as {
+  if net ~ {{ local_as.ipv6 | ipv6 | default('::/0') }} then accept;
+  reject;
+};
+
+template bgp uplink {
+  local as {{ local_as.number | default(0) }};
+  import all;
+  export filter local_as;
+  multihop 64;
+  default bgp_local_pref 200;
+};
+
+{% for peer in peers %}
+{% if peer.ipv6 is defined %}
+protocol bgp {{ peer.name }} from uplink {
+  source address {{ peer.ipv6.source_address }};
+  neighbor {{ peer.ipv6.address }} as {{ peer.as_number }};
+  default bgp_local_pref {{ peer.ipv6.bgp_local_pref | default(100) }};
+};
+{% endif %}
+{% endfor %}
+
+{% endif %}
