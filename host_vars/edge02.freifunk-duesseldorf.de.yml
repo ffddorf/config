@@ -17,3 +17,37 @@ gretun:
     remote: 185.66.193.1
     ip4: 100.64.3.3/31
     ip6: 2a03:2260:0:18b::2/64
+
+peers:
+  - name: ber_a
+    as_number: 201701
+    ipv4:
+      address: 100.64.2.252
+      source_address: 100.64.2.253
+    ipv6:
+      address: 2a03:2260:0:188::1
+      source_address: 2a03:2260:0:188::2
+  - name: ber_b
+    as_number: 201701
+    ipv4:
+      address: 100.64.2.254
+      source_address: 100.64.2.255
+    ipv6:
+      address: 2a03:2260:0:189::1
+      source_address: 2a03:2260:0:189::2
+  - name: dus_a
+    as_number: 201701
+    ipv4:
+      address: 100.64.3.0
+      source_address: 100.64.3.1
+    ipv6:
+      address: 2a03:2260:0:18a::1
+      source_address: 2a03:2260:0:18a::2
+  - name: dus_b
+    as_number: 201701
+    ipv4:
+      address: 100.64.3.2
+      source_address: 100.64.3.3
+    ipv6:
+      address: 2a03:2260:0:18b::1
+      source_address: 2a03:2260:0:18b::2

@@ -27,7 +27,6 @@ template bgp uplink {
   export filter local_as;
   next hop self;
   multihop 64;
-  default bgp_local_pref 200;
 };
 
 {% for peer in peers %}
@@ -35,7 +34,7 @@ template bgp uplink {
 protocol bgp {{ peer.name }} from uplink {
   source address {{ peer.ipv4.source_address }};
   neighbor {{ peer.ipv4.address }} as {{ peer.as_number }};
-  default bgp_local_pref {{ peer.ipv4.bgp_local_pref }};
+  default bgp_local_pref {{ peer.ipv4.bgp_local_pref | default(100) }};
 };
 {% endif %}
 {% endfor %}

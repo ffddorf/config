@@ -26,7 +26,6 @@ template bgp uplink {
   import all;
   export filter local_as;
   multihop 64;
-  default bgp_local_pref 200;
 };
 
 {% for peer in peers %}
