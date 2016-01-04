@@ -14,6 +14,10 @@ protocol device {
   scan time 8;
 };
 
+protocol direct {
+  interface "tun*";
+};
+
 {% if local_as is defined %}
 
 filter local_as {
