@@ -11,7 +11,7 @@ iface {{ tun.interface }} inet manual
 
 {% if tun.ip4 is defined %}
 iface {{ tun.interface }} inet static
-  address {{ tun.ip4 | ipv4('address') }}
+  address {{ tun.ip4 }}
   netmask {{ tun.ip4 | ipv4('prefix') }}
 {% endif %}
 
