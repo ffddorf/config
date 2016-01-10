@@ -14,3 +14,8 @@
   hosts: edge
   roles:
   - { role: edge, tags: edge }
+
+- name: Configure core router
+  hosts: core
+  roles:
+  - { role: core, tags: core }

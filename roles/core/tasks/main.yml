@@ -1,0 +1,22 @@
+---
+
+- name: Add package repository
+  apt_repository: repo='deb http://bird.network.cz/debian/ jessie main'
+  register: repo
+
+- name: Add package key
+  apt_key: url=http://bird.network.cz/debian/apt.key
+  when: repo | changed
+
+- name: Update package cache
+  apt: update_cache=yes
+  when: repo | changed
+
+- name: Install package
+  apt: name=bird state=present
+
+- include: bird.yml
+  tags: ipv4
+
+  #- include: bird6.yml
+  #tags: ipv6
