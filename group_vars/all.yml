@@ -5,3 +5,4 @@ local_as:
   name: Freifunk Duesseldorf
   ipv6: 2a03:2260:3004::/48
   ipv4: 10.25.0.0/16
+  nat: 185.66.195.66/31

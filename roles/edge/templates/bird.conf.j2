@@ -15,13 +15,18 @@ protocol device {
 };
 
 protocol direct {
+  interface "lo";
   interface "tun*";
 };
 
 {% if local_as is defined %}
-
 filter local_as {
-  if net ~ {{ local_as.ipv4 | ipv4 | default('0.0.0.0/0') }} then accept;
+{% if local_as.ipv4 is defined %}
+  if net ~ {{ local_as.ipv4 }} then accept;
+{% endif %}
+{% if local_as.nat is defined %}
+  if net ~ {{ local_as.nat }} then accept;
+{% endif %}
   reject;
 };
 
