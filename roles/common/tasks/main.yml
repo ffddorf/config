@@ -4,3 +4,4 @@
 - include: snmpd.yml
 - include: syslog.yml
 - include: gretun.yml
+- include: loopback.yml

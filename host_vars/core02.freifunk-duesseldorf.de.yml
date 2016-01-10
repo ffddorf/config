@@ -1,5 +1,7 @@
 ---
 
+nat_ip: 185.66.195.67
+
 gretun:
   - interface: tun-edge01
     remote: 185.46.137.154
