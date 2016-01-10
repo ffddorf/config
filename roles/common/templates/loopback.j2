@@ -3,3 +3,4 @@
 iface lo inet static
   address {{ nat_ip }}
   netmask 32
+  post-up ip rule add from {{ nat_ip }} table 16
