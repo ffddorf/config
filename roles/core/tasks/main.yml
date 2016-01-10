@@ -20,3 +20,9 @@
 
   #- include: bird6.yml
   #tags: ipv6
+
+- name: Enable IPv4 forward
+  sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
+
+- name: Enable IPv6 forward
+  sysctl: name="net.ipv6.conf.all.forwarding" value=1 sysctl_set=yes state=present reload=yes
