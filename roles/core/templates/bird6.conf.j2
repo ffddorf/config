@@ -1,0 +1,32 @@
+router id {{ ansible_default_ipv4.address }};
+log syslog all;
+
+protocol kernel {
+  device routes;
+  import all;
+  export all;
+  kernel table 16;
+};
+
+protocol device {
+  scan time 8;
+};
+
+protocol direct {
+  interface "lo";
+  interface "tun*";
+};
+
+{% if local_as.ipv6 is defined %}
+protocol static {
+  route {{ local_as.ipv6 }} unreachable;
+};
+{% endif %}
+
+protocol ospf ddorf {
+  import all;
+  export all;
+  area 0.0.0.0 {
+    interface "tun-edge*";
+  };
+}

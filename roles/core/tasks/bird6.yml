@@ -1,0 +1,8 @@
+---
+
+- name: Configure service (IPv6)
+  template: src=bird6.conf.j2 dest=/etc/bird/bird6.conf validate='bird6 -pc %s'
+  notify: reload bird6
+
+- name: Enable service (IPv6)
+  service: name=bird6 enabled=yes
