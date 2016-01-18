@@ -20,3 +20,4 @@
   roles:
   - { role: core, tags: core }
   - { role: dns-resolver, tags: dns-resolver }
+  - { role: dhcp-server, tags: dhcp-server }

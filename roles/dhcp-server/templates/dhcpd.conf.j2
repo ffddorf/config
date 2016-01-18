@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+
+option domain-name-servers {{ ipv4 | ipv4('address') }};
+
+subnet {{ ipv4 | ipv4('network') }} netmask {{ ipv4 | ipv4('netmask') }} {
+    range {{ ipv4 | ipv4('10') | ipv4('address') }} {{ ipv4 | ipv4('254') | ipv4('address') }};
+    option routers {{ ipv4 | ipv4('address') }};
+    option domain-name-servers home;
+}
+
+default-lease-time 3600;
+max-lease-time 86400;
+authoritative;

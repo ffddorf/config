@@ -1,0 +1,11 @@
+---
+
+- name: Install packages
+  apt: name=isc-dhcp-server state=present
+
+- name: Configure service
+  template: src=dhcpd.conf.j2 dest=/etc/dhcp/dhcpd.conf
+  notify: restart dhcpd
+
+- name: Enable service
+  service: name=isc-dhcp-server enabled=yes
