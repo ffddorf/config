@@ -1,0 +1,11 @@
+---
+
+- name: Install packages
+  apt: name=bind9 state=present
+
+- name: Configure service
+  template: src=named.conf.options.j2 dest=/etc/bind/named.conf.options
+  notify: restart bind9
+
+- name: Enable service
+  service: name=bind9 enabled=yes

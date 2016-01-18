@@ -19,3 +19,4 @@
   hosts: core
   roles:
   - { role: core, tags: core }
+  - { role: dns-resolver, tags: dns-resolver }
