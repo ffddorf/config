@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+
+{% for bridge in bridges %}
+iface {{ bridge.name }} inet manual
+  bridge_ports none
+  pre-up ip rule add iif $IFACE table 16
+  pre-up ip rule add oif $IFACE table 16
+
+{% if bridge.ipv4 is defined %}
+iface {{ bridge.name }} inet static
+  address {{ bridge.ipv4 }}
+{% endif %}
+{% endfor %}

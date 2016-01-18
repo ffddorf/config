@@ -1,0 +1,7 @@
+---
+
+- name: Install packages
+  apt: name=bridge-utils state=present
+
+- name: Configure bridge networking
+  template: src=bridge.j2 dest=/etc/network/interfaces.d/bridge

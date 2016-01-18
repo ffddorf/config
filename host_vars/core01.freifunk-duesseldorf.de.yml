@@ -12,3 +12,7 @@ gretun:
     remote: 185.46.137.155
     ip4: 100.64.251.3/31
     ip6: "{{ loopback_ipv6 }}"
+
+bridges:
+  - name: br0
+    ipv4: 100.64.254.1/24
