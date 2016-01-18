@@ -9,7 +9,9 @@ iface {{ tun.interface }} inet manual
   post-up ip link set dev $IFACE multicast on
   post-up ip link set up dev $IFACE
   post-up ip rule add iif $IFACE table 16
+  post-up ip -6 rule add iif $IFACE table 16
   post-up ip rule add oif $IFACE table 16
+  post-up ip -6 rule add oif $IFACE table 16
   post-down ip tunnel del $IFACE
 
 {% if tun.ip4 is defined %}

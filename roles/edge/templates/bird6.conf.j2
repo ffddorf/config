@@ -15,10 +15,15 @@ protocol device {
 };
 
 protocol direct {
+  interface "lo";
   interface "tun*";
 };
 
 {% if local_as is defined %}
+
+protocol static {
+  route {{ local_as.ipv6 | ipv6 }} unreachable;
+};
 
 filter local_as {
   if net ~ {{ local_as.ipv6 | ipv6 | default('::/0') }} then accept;

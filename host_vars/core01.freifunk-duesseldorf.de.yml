@@ -1,13 +1,14 @@
 ---
 
 nat_ip: 185.66.195.66
+loopback_ipv6: 2a03:2260:3004:100::1/128
 
 gretun:
   - interface: tun-edge01
     remote: 185.46.137.154
     ip4: 100.64.251.1/31
-    ip6: 2a03:2260:3004:1::2/64
+    ip6: "{{ loopback_ipv6 }}"
   - interface: tun-edge02
     remote: 185.46.137.155
     ip4: 100.64.251.3/31
-    ip6: 2a03:2260:3004:1::2/64
+    ip6: "{{ loopback_ipv6 }}"

@@ -2,4 +2,3 @@
 
 - name: Configure loopback interface
   template: src=loopback.j2 dest=/etc/network/interfaces.d/loopback
-  when: nat_ip is defined
