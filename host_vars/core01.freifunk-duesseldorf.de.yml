@@ -3,6 +3,7 @@
 nat_ip: 185.66.195.66
 loopback_ipv6: 2a03:2260:3004:100::1/128
 ipv4: 100.64.254.1/24
+ipv6: 2a03:2260:3004:f00::1/56
 
 gretun:
   - interface: tun-edge01
@@ -17,3 +18,4 @@ gretun:
 bridges:
   - name: br0
     ipv4: 100.64.254.1/24
+    ipv6: 2a03:2260:3004:f00::1/56

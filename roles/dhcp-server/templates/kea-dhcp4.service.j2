@@ -1,0 +1,12 @@
+[Unit]
+Description=KEA DHCPv4 server
+Requires=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/kea/kea.kea-dhcp4.pid
+ExecStart=/usr/sbin/kea-dhcp4 -c /etc/kea/kea.conf
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+{
+  "Dhcp4": {
+    "interfaces-config": {
+      "interfaces": [ "br0" ],
+      "dhcp-socket-type": "raw"
+    },
+    "valid-lifetime": 38400,
+    "renew-timer": 3600,
+    "rebind-timer": 7200,
+    "subnet4": [{
+      "pools": [ { "pool": "{{ ipv4 | ipaddr('10') | ipaddr('address') }}-{{ ipv4 | ipaddr('254') | ipaddr('address') }}" } ],
+      "subnet": "{{ ipv4 | ipaddr('subnet') }}"
+    }]
+  }
+}
