@@ -1,0 +1,6 @@
+---
+
+loopback_subnets:
+  core:
+    ipv4_size: 22
+    seq: 1

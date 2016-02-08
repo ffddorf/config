@@ -1,0 +1,6 @@
+---
+
+loopback_subnets:
+  backbone:
+    ipv4_size: 21
+    seq: 0

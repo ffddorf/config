@@ -1,0 +1,6 @@
+---
+
+loopback_subnets:
+  edge:
+    ipv4_size: 22
+    seq: 0

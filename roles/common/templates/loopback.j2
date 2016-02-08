@@ -7,6 +7,12 @@ iface lo inet static
   post-up ip rule add from {{ nat_ip }} table 16
 {% endif %}
 
+{% if loopback_address is defined %}
+iface lo inet static
+  address {{ loopback_address }}
+  post-up ip rule add from {{ loopback_address }} table 16
+{% endif %}
+
 {% if loopback_ipv6 is defined %}
 iface lo inet6 static
   address {{ loopback_ipv6 | ipv6 }}

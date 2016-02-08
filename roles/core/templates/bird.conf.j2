@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 
-router id {{ ansible_default_ipv4.address }};
+router id {{ loopback_address }};
 log syslog all;
 
 protocol kernel {
@@ -19,10 +19,24 @@ protocol direct {
   interface "tun*";
 };
 
+{% if local_as.ipv4 is defined %}
+protocol static {
+  route {{ local_as.ipv4 }} unreachable;
+  route {{ local_as.nat }} unreachable;
+};
+{% endif %}
+
 protocol ospf ddorf {
   import all;
   export all;
   area 0.0.0.0 {
+    interface "lo";
     interface "tun-edge*";
+  };
+  area 0.0.0.1 {
+    interface "tun-netminion*";
+  };
+  area 0.0.0.3 {
+    interface "tun-tomo";
   };
 };

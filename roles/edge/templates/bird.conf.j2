@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 
-router id {{ ansible_default_ipv4.address }};
+router id {{ loopback_address }};
 log syslog all;
 
 protocol kernel {
@@ -50,8 +50,6 @@ protocol bgp {{ peer.name }} from uplink {
 
 {% endif %}
 protocol ospf ddorf {
-  import all;
-  export all;
   area 0.0.0.0 {
     interface "tun-core*";
   };

@@ -1,10 +1,18 @@
 [core]
-core01.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland"
-core02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland"
+core01.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" seq=1
+core02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" seq=2
 
 [edge]
-edge01.freifunk-duesseldorf.de syscontact=nomaster syslocation="Speedbone, Berlin"
-edge02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Speedbone, Berlin"
+edge01.freifunk-duesseldorf.de syscontact=nomaster syslocation="Speedbone, Berlin" seq=1
+edge02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Speedbone, Berlin" seq=2
 
 [observium]
 observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland"
+
+[backbone:children]
+edge
+core
+
+[site]
+netminion seq=1
+nomaster  seq=2

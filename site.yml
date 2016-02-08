@@ -1,7 +1,9 @@
 ---
 
 - name: Set up common configuration
-  hosts: all
+  hosts:
+  - router
+  - observium
   roles:
   - { role: common, tags: common }
   - { role: sshd, tags: sshd }
@@ -21,4 +23,3 @@
   roles:
   - { role: core, tags: core }
   - { role: dns-resolver, tags: dns-resolver }
-  - { role: dhcp-server, tags: dhcp-server }
