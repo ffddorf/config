@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+
+{% if nat_ip is defined %}
+iface lo inet static
+  address {{ nat_ip }}
+  netmask 32
+  post-up ip rule add from {{ nat_ip }} table 16
+{% endif %}
+
+{% if loopback_address is defined %}
+iface lo inet static
+  address {{ loopback_address }}
+  netmask 32
+  post-up ip rule add from {{ loopback_address }} table 16
+{% endif %}
+
+{% if loopback_ipv6 is defined %}
+iface lo inet6 static
+  address {{ loopback_ipv6 | ipv6 }}
+  post-up ip -6 rule add from {{ loopback_ipv6 | ipv6('address') }} table 16
+{% endif %}

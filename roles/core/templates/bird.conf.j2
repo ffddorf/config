@@ -27,10 +27,10 @@ protocol static {
 {% endif %}
 
 protocol ospf ddorf {
-  import all;
-  export all;
   area 0.0.0.0 {
-    interface "lo";
+    interface "lo" {
+      stub;
+    };
     interface "tun-edge*";
   };
   area 0.0.0.1 {

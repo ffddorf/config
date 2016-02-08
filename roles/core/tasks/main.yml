@@ -1,5 +1,7 @@
 ---
 
+- include: loopback.yml
+
 - name: Add package repository
   apt_repository: repo='deb http://bird.network.cz/debian/ jessie main'
   register: repo
