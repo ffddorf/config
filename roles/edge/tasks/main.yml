@@ -1,6 +1,7 @@
 ---
 
 - include: loopback.yml
+- include: gretun.yml
 
 - name: Add package repository
   apt_repository: repo='deb http://bird.network.cz/debian/ jessie main'

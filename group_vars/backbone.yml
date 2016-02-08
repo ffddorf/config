@@ -4,3 +4,8 @@ loopback_subnets:
   backbone:
     ipv4_size: 21
     seq: 0
+
+tunnel_subnets:
+  backbone:
+    ipv4_size: 19
+    seq: 0

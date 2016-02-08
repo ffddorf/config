@@ -1,0 +1,4 @@
+---
+
+- name: Configure gre tun devices
+  template: src=gretun.j2 dest=/etc/network/interfaces.d/gretun

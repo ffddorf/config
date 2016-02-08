@@ -1,0 +1,53 @@
+# {{ ansible_managed }}
+
+# Tunnel to DDorf Edge
+
+{% for partner in uplink_tunnel_partners %}
+{% set tunnel_network = tunnel_ipv4 | ipsubnet(19,seq) | ipsubnet(20,0) | ipsubnet(31,hostvars[partner].seq) %}
+{% set interface_name = "tun-" + hostvars[partner].ansible_hostname %}
+auto {{ interface_name }}
+
+iface {{ interface_name }} inet manual
+  pre-up ip tunnel add $IFACE mode gre remote {{ hostvars[partner].ansible_default_ipv4.address }} local {{ ansible_default_ipv4.address }} ttl 255
+  post-up ip link set dev $IFACE mtu 1400
+  post-up ip link set dev $IFACE multicast on
+  post-up ip link set up dev $IFACE
+  post-up ip rule add iif $IFACE table 16
+  post-up ip -6 rule add iif $IFACE table 16
+  post-up ip rule add oif $IFACE table 16
+  post-up ip -6 rule add oif $IFACE table 16
+  post-down ip tunnel del $IFACE
+
+iface {{ interface_name }} inet static
+  address {{ tunnel_network | ipaddr('1') | ipaddr('address')  }}
+  netmask 31
+
+{% endfor %}
+
+
+# Tunnel to DDorf Site
+
+{% for partner in downlink_tunnel_partners %}
+{% set tunnel_network = tunnel_ipv4 | ipsubnet(19,hostvars[partner].seq) | ipsubnet(20,1) | ipsubnet(31,seq) %}
+{% set interface_name = "tun-" + hostvars[partner].sitename %}
+auto {{ interface_name }}
+
+iface {{ interface_name }} inet manual
+  pre-up ip tunnel add $IFACE mode gre remote {{ hostvars[partner].siteip }} local {{ ansible_default_ipv4.address }} ttl 255
+  post-up ip link set dev $IFACE mtu 1400
+  post-up ip link set dev $IFACE multicast on
+  post-up ip link set up dev $IFACE
+  post-up ip rule add iif $IFACE table 16
+  post-up ip -6 rule add iif $IFACE table 16
+  post-up ip rule add oif $IFACE table 16
+  post-up ip -6 rule add oif $IFACE table 16
+  post-down ip tunnel del $IFACE
+
+iface {{ interface_name }} inet static
+  # TODO: fix bug #13716 for real
+  address {{ tunnel_network | ipv4('network') | ipaddr('address')  }}
+  netmask 31
+
+{% endfor %}
+
+

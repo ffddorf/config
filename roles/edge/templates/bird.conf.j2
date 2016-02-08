@@ -3,20 +3,14 @@
 router id {{ loopback_address }};
 log syslog all;
 
-protocol kernel {
+protocol kernel freifunk {
   device routes;
-  import all;
   export all;
   kernel table 16;
 };
 
 protocol device {
-  scan time 8;
-};
-
-protocol direct {
-  interface "lo";
-  interface "tun*";
+  scan time 2;
 };
 
 {% if local_as is defined %}

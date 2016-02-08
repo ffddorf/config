@@ -3,28 +3,15 @@
 router id {{ loopback_address }};
 log syslog all;
 
-protocol kernel {
+protocol kernel freifunk {
   device routes;
-  import all;
   export all;
   kernel table 16;
 };
 
 protocol device {
-  scan time 8;
+  scan time 2;
 };
-
-protocol direct {
-  interface "lo";
-  interface "tun*";
-};
-
-{% if local_as.ipv4 is defined %}
-protocol static {
-  route {{ local_as.ipv4 }} unreachable;
-  route {{ local_as.nat }} unreachable;
-};
-{% endif %}
 
 protocol ospf ddorf {
   area 0.0.0.0 {
@@ -32,11 +19,5 @@ protocol ospf ddorf {
       stub;
     };
     interface "tun-edge*";
-  };
-  area 0.0.0.1 {
-    interface "tun-netminion*";
-  };
-  area 0.0.0.3 {
-    interface "tun-tomo";
   };
 };

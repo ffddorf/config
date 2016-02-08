@@ -1,0 +1,56 @@
+# {{ ansible_managed }}
+
+# Tunnel to DDorf Backbone
+
+{% for partner in tunnel_partners %}
+{% set tunnel_network = tunnel_ipv4 | ipsubnet(19,hostvars[partner].seq) | ipsubnet(20,0) | ipsubnet(31,seq) %}
+{% set interface_name = "tun-" + hostvars[partner].ansible_hostname %}
+auto {{ interface_name }}
+
+iface {{ interface_name }} inet manual
+  pre-up ip tunnel add $IFACE mode gre remote {{ hostvars[partner].ansible_default_ipv4.address }} local {{ ansible_default_ipv4.address }} ttl 255
+  post-up ip link set dev $IFACE mtu 1400
+  post-up ip link set dev $IFACE multicast on
+  post-up ip link set up dev $IFACE
+  post-up ip rule add iif $IFACE table 16
+  post-up ip -6 rule add iif $IFACE table 16
+  post-up ip rule add oif $IFACE table 16
+  post-up ip -6 rule add oif $IFACE table 16
+  post-down ip tunnel del $IFACE
+
+iface {{ interface_name }} inet static
+  # TODO: fix bug #13716 for real
+  address {{ tunnel_network | ipaddr('network') | ipaddr('address')  }}
+  netmask 31
+
+{% endfor %}
+
+# Tunnel to Rheinland Backbone
+
+{% for tun in gretun %}
+auto {{ tun.interface }}
+
+iface {{ tun.interface }} inet manual
+  pre-up ip tunnel add $IFACE mode gre remote {{ tun.remote }} local {{ ansible_default_ipv4.address }} ttl 255
+  post-up ip link set dev $IFACE mtu 1400
+  post-up ip link set dev $IFACE multicast on
+  post-up ip link set up dev $IFACE
+  post-up ip rule add iif $IFACE table 16
+  post-up ip -6 rule add iif $IFACE table 16
+  post-up ip rule add oif $IFACE table 16
+  post-up ip -6 rule add oif $IFACE table 16
+  post-down ip tunnel del $IFACE
+
+{% if tun.ip4 is defined %}
+iface {{ tun.interface }} inet static
+  address {{ tun.ip4 }}
+  netmask {{ tun.ip4 | ipv4('prefix') }}
+{% endif %}
+
+{% if tun.ip6 is defined %}
+iface {{ tun.interface }} inet6 static
+  address {{ tun.ip6 | ipv6('address') }}
+  netmask {{ tun.ip6 | ipv6('prefix') }}
+{% endif %}
+
+{% endfor%}

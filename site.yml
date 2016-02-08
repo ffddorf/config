@@ -1,8 +1,14 @@
 ---
 
+- name: Gather facts
+  hosts: backbone
+  tasks:
+    - name: Execute setup
+      action: setup
+
 - name: Set up common configuration
   hosts:
-  - router
+  - backbone
   - observium
   roles:
   - { role: common, tags: common }
