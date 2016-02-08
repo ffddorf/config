@@ -4,6 +4,7 @@
   hosts: all
   roles:
   - { role: common, tags: common }
+  - { role: sshd, tags: sshd }
 
 - name: Configure monitoring
   hosts: observium

@@ -1,0 +1,11 @@
+---
+
+- name: Configure service
+  template: src=sshd.conf.j2 dest=/etc/ssh/sshd_config validate='/usr/sbin/sshd -T -f %s'
+  notify: restart sshd
+
+- name: Configure authorized keys
+  template: src=authorized_keys.j2 dest=/root/.ssh/authorized_keys
+
+- name: Enable service
+  service: name=sshd enabled=yes
