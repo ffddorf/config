@@ -1,3 +1,5 @@
 ---
 
 loopback_address: "{{ internal_ipv4 | ipsubnet(loopback_subnets.backbone.ipv4_size, loopback_subnets.backbone.seq) | ipsubnet(loopback_subnets.core.ipv4_size, loopback_subnets.core.seq) | ipaddr(seq) | ipaddr('address') }}"
+
+tunnel_partners: "{{ groups['edge'] }}"

@@ -4,3 +4,8 @@ loopback_subnets:
   site:
     ipv4_size: 21
     seq: 1
+
+tunnel_subnets:
+  site:
+    ipv4_size: 19
+    seq: 1

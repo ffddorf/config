@@ -3,6 +3,5 @@
 - include: hostname.yml
 - include: snmpd.yml
 - include: syslog.yml
-- include: gretun.yml
 - include: bridge.yml
 - include: sysctl.yml
