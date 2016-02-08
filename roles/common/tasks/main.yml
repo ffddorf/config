@@ -6,3 +6,4 @@
 - include: gretun.yml
 - include: loopback.yml
 - include: bridge.yml
+- include: sysctl.yml
