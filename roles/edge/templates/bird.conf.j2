@@ -44,7 +44,7 @@ protocol bgp {{ peer.name }} from uplink {
 
 {% endif %}
 protocol ospf ddorf {
-  area 0.0.0.0 {
+  area 0 {
     interface "lo" {
       stub;
     };

@@ -14,10 +14,15 @@ protocol device {
 };
 
 protocol ospf ddorf {
-  area 0.0.0.0 {
+  area 0 {
     interface "lo" {
       stub;
     };
     interface "tun-edge*";
   };
+{% for site in groups.site %}
+  area {{ hostvars[site].seq }} {
+    interface "tun-site{{ '%03d' % hostvars[site].seq }}";
+  };
+{% endfor %}
 };

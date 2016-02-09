@@ -29,7 +29,8 @@ iface {{ interface_name }} inet static
 
 {% for partner in downlink_tunnel_partners %}
 {% set tunnel_network = tunnel_ipv4 | ipsubnet(19,hostvars[partner].seq) | ipsubnet(20,1) | ipsubnet(31,seq) %}
-{% set interface_name = "tun-" + hostvars[partner].sitename %}
+{% set interface_name = "tun-site" + '%03d' % hostvars[partner].seq %}
+
 auto {{ interface_name }}
 
 iface {{ interface_name }} inet manual
