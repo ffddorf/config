@@ -35,3 +35,11 @@ To calculate the tunnel addresses we assign subnets of the IPv4 prefix in three 
 - one /31 for each tunnel link
   - address 0 for upper tunnel partner
   - address 1 for lower tunnel partner
+
+## Loopback address calculation
+To calculate the loopback addresses for the routers we assign addresses from a special loopback subnet
+- we use the 0th /21 subnet
+- one /23 for each router area
+  - 0th subnet for edge routers
+  - 1st subnet for core routers
+  - 2nd subnet for site routers
