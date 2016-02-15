@@ -1,6 +1,0 @@
----
-
-tunnel_subnets:
-  router:
-    ipv4_size: 16
-    seq: "{{ seq }}"

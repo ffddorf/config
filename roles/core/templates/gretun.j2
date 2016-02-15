@@ -3,7 +3,25 @@
 # Tunnel to DDorf Edge
 
 {% for partner in uplink_tunnel_partners %}
-{% set tunnel_network = tunnel_ipv4 | ipsubnet(19,seq) | ipsubnet(20,0) | ipsubnet(31,hostvars[partner].seq) %}
+{# set tunnel_network = tunnel_ipv4 | ipsubnet(19,seq) | ipsubnet(20,0) | ipsubnet(31,hostvars[partner].seq) #}
+
+{# get partner sequence number for this tunnel #}
+{% set partner_seq = hostvars[partner].seq %}
+
+{# select prefix for tunnels with me based on my (core) sequence number #}
+{% set tunnel_prefix = tunnel_ipv4 | ipsubnet(tunnel_subnet_size,seq) %}
+
+{# select prefix for edge tunnels (0th /20) #}
+{% set tunnel_prefix_site = tunnel_prefix | ipsubnet(20,0) %}
+
+{# select network for this tunnel based on edge sequence number (/31) #}
+{% set tunnel_network = tunnel_prefix_site | ipsubnet(31,partner_seq) %}
+
+{# get local ip for this tunnel (0th address) #}
+{# TODO: fix bug #13716 for real #}
+{% set tunnel_address = tunnel_network | ipaddr('1') | ipaddr('address') %}
+
+{# name interface like "tun-site001" #}
 {% set interface_name = "tun-" + hostvars[partner].ansible_hostname %}
 auto {{ interface_name }}
 
@@ -19,7 +37,7 @@ iface {{ interface_name }} inet manual
   post-down ip tunnel del $IFACE
 
 iface {{ interface_name }} inet static
-  address {{ tunnel_network | ipaddr('1') | ipaddr('address')  }}
+  address {{ tunnel_address }}
   netmask 31
 
 {% endfor %}
@@ -28,7 +46,24 @@ iface {{ interface_name }} inet static
 # Tunnel to DDorf Site
 
 {% for partner in downlink_tunnel_partners %}
-{% set tunnel_network = tunnel_ipv4 | ipsubnet(19,hostvars[partner].seq) | ipsubnet(20,1) | ipsubnet(31,seq) %}
+
+{# get partner sequence number for this tunnel #}
+{% set partner_seq = hostvars[partner].seq %}
+
+{# select prefix for tunnels with this site based on site sequence number #}
+{% set tunnel_prefix = tunnel_ipv4 | ipsubnet(tunnel_subnet_size,partner_seq) %}
+
+{# select prefix for site tunnels (1st /20) #}
+{% set tunnel_prefix_site = tunnel_prefix | ipsubnet(20,1) %}
+
+{# select network for this tunnel based on core sequence number (/31) #}
+{% set tunnel_network = tunnel_prefix_site | ipsubnet(31,seq) %}
+
+{# get local ip for this tunnel (0th address) #}
+{# TODO: fix bug #13716 for real #}
+{% set tunnel_address = tunnel_network | ipv4('network') | ipaddr('address') %}
+
+{# name interface like "tun-site001" #}
 {% set interface_name = "tun-site" + '%03d' % hostvars[partner].seq %}
 
 auto {{ interface_name }}
@@ -45,8 +80,7 @@ iface {{ interface_name }} inet manual
   post-down ip tunnel del $IFACE
 
 iface {{ interface_name }} inet static
-  # TODO: fix bug #13716 for real
-  address {{ tunnel_network | ipv4('network') | ipaddr('address')  }}
+  address {{ tunnel_address }}
   netmask 31
 
 {% endfor %}
