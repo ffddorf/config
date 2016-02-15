@@ -1,6 +1,31 @@
 # config
 Ansible Configuration Management for router network of Freifunk Düsseldorf private AS
 
+## Ddorf backbone structure
+```
++--------------------------+
+|    Rheinland Backbone    |
++----+----------------+----+
+     |                |
++----+---+        +---+----+
+| Edge01 |        | Edge02 |
++--+-+---+        +-+---+--+
+   | |              |   |
+   | +----------------+ |
+   |                | | |
+   | +--------------+ | |
+   | |                | |
++--+-+---+        +---+-+--+
+| Core01 |        | Core02 |
++--+-----+        +---+----+
+   |                  |
+   | +----------------+
+   | |
++--+-+----+
+| Site001 |  ...
++---------+
+```
+
 ## Tunnel address calculation
 To calculate the tunnel addresses we assign subnets of the IPv4 prefix in three hierarchy levels:
 - one /19 for each core router
