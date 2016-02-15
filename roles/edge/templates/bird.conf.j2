@@ -18,9 +18,6 @@ filter local_as {
 {% if local_as.ipv4 is defined %}
   if net ~ {{ local_as.ipv4 }} then accept;
 {% endif %}
-{% if local_as.nat is defined %}
-  if net ~ {{ local_as.nat }} then accept;
-{% endif %}
   reject;
 };
 
