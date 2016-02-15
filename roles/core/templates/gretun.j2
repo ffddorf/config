@@ -3,7 +3,6 @@
 # Tunnel to DDorf Edge
 
 {% for partner in uplink_tunnel_partners %}
-{# set tunnel_network = tunnel_ipv4 | ipsubnet(19,seq) | ipsubnet(20,0) | ipsubnet(31,hostvars[partner].seq) #}
 
 {# get partner sequence number for this tunnel #}
 {% set partner_seq = hostvars[partner].seq %}
@@ -21,7 +20,7 @@
 {# TODO: fix bug #13716 for real #}
 {% set tunnel_address = tunnel_network | ipaddr('1') | ipaddr('address') %}
 
-{# name interface like "tun-site001" #}
+{# name interface like "tun-edge01" #}
 {% set interface_name = "tun-" + hostvars[partner].ansible_hostname %}
 auto {{ interface_name }}
 
