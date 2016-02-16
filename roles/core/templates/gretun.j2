@@ -49,14 +49,14 @@ iface {{ interface_name }} inet static
 {# get partner sequence number for this tunnel #}
 {% set partner_seq = hostvars[partner].seq %}
 
-{# select prefix for tunnels with this site based on site sequence number #}
-{% set tunnel_prefix = tunnel_ipv4 | ipsubnet(tunnel_subnet_size,partner_seq) %}
+{# select prefix for tunnels with me based on my (core) sequence number #}
+{% set tunnel_prefix = tunnel_ipv4 | ipsubnet(tunnel_subnet_size,seq) %}
 
 {# select prefix for site tunnels (1st /20) #}
 {% set tunnel_prefix_site = tunnel_prefix | ipsubnet(20,1) %}
 
-{# select network for this tunnel based on core sequence number (/31) #}
-{% set tunnel_network = tunnel_prefix_site | ipsubnet(31,seq) %}
+{# select network for this tunnel based on site sequence number (/31) #}
+{% set tunnel_network = tunnel_prefix_site | ipsubnet(31,partner_seq) %}
 
 {# get local ip for this tunnel (0th address) #}
 {# TODO: fix bug #13716 for real #}
