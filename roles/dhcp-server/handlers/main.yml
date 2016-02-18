@@ -1,7 +1,0 @@
----
-
-- name: reload systemd
-  command: systemctl daemon-reload
-
-- name: reload kea-dhcp4
-  service: name=kea-dhcp4 state=reloaded
