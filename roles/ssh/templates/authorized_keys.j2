@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+
+{% for admin in admins %}
+# Admin {{ admin.name }}
+{% for sshkey in admin.sshkeys %}
+{{ sshkey }}
+{% endfor %}
+
+
+{% endfor %}

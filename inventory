@@ -20,3 +20,6 @@ nomaster  sitename=nomaster siteip=176.9.74.50 seq=2
 
 [observium]
 observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland"
+
+[website]
+cepheus.uberspace.de ansible_ssh_user="ffddorf"

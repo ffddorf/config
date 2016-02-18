@@ -6,6 +6,12 @@
     - name: Execute setup
       action: setup
 
+- name: Configure SSH users for website deployment
+  hosts:
+  - website
+  roles:
+  - { role: ssh, tags: ssh}
+
 - name: Set up common configuration
   hosts:
   - backbone
