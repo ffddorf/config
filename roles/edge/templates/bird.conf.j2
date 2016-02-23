@@ -21,12 +21,23 @@ filter local_as {
   reject;
 };
 
+filter is_default {
+  if net = 0.0.0.0/0 then accept;
+  reject;
+};
+
 template bgp uplink {
   local as {{ local_as.number | default(0) }};
   import all;
   export filter local_as;
   next hop self;
   multihop 64;
+};
+
+template bgp internal {
+  local as {{ local_as.number | default(0) }};
+  export filter is_default;
+  source address {{ loopback_address }};
 };
 
 {% for peer in peers %}
@@ -48,3 +59,23 @@ protocol ospf ddorf {
     interface "tun-core*";
   };
 };
+
+
+{# select prefix for loopback address of the peer based on sequence number #}
+{% set loopback_prefix = internal_ipv4 | ipsubnet(loopback_subnets.backbone.ipv4_size,loopback_subnets.backbone.seq) %}
+
+{# select prefix for core loopback addresses #}
+{% set loopback_prefix_core = loopback_prefix | ipsubnet(22,1) %}
+
+{% for peer in groups['core'] %}
+
+{# get peer sequence number for this session #}
+{% set peer_seq = hostvars[peer].seq %}
+
+{# select network for this tunnel based on my (edge) sequence number (/31) #}
+{% set peer_loopback_address = loopback_prefix_core | ipaddr(peer_seq) %}
+
+protocol bgp {{ peer }} {
+  neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
+};
+{% endfor %}
