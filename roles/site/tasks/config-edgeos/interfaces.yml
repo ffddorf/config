@@ -1,0 +1,4 @@
+---
+
+- name: Configure interfaces
+  template: src=edgeos/interfaces.j2 dest=/config/fragments/interfaces.config

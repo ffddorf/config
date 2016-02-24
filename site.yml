@@ -35,3 +35,8 @@
   roles:
   - { role: core, tags: core }
   - { role: dns-resolver, tags: dns-resolver }
+
+- name: Configure site routers (testing)
+  hosts: test
+  roles:
+  - { role: site, tags: site-test }

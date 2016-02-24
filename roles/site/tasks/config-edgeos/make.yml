@@ -1,0 +1,14 @@
+---
+
+- name: Create fragment directory
+  file: path=/config/fragments state=directory
+
+- include: interfaces.yml
+- include: service.yml
+- include: system.yml
+
+- name: Add signature to config
+  template: src=templates/edgeos/signature.j2 dest=/config/fragments/z_signature.config
+
+- name: Concat config fragments into final file
+  assemble: src=/config/fragments/ dest=/config/config.proposed

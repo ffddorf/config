@@ -1,0 +1,34 @@
+system {
+     login {
+         user ubnt {
+             authentication {
+                 encrypted-password $1$zKNoUbAo$gomzUbYvgyUMcD436Wo66.
+                 public-keys marcus {
+                     key AAAAB3NzaC1yc2EAAAABIwAAAQEAsuvLZVNr6xD3pVc51A5l2OTTXDob+QZobf36kIbjHDONju6WrFbWT/E3tKRwW9IXsDXOMVHBNpbp+7KW/6snUsATKg8Oz6EgKAgVaWYaFTdP6VYB55bTgvKkwRfBE1AnzcuVLmsSKRT0wkSgNtVBwahWG75slHqZ4eLB8yq5Kx/GJclRnTSdokh/xlF0SR6MDBjCnPrlm917O/xzXiGdxPwP+3FPqflSxGMEy7y2SGuoKiIi3GJ2nZYv+Od/B4vWW5PqhvOeYR4DSDgWu/yw/XMWisbXO+C6CjfLBlmm9taKeN4yOka4Lh7DJU1Mm/Oui21eSKXZwbNGyU2u/fkHfQ==
+                     type ssh-rsa
+                 }
+             }
+             level admin
+         }
+     }
+     ntp {
+         server 0.ubnt.pool.ntp.org {
+         }
+         server 1.ubnt.pool.ntp.org {
+         }
+         server 2.ubnt.pool.ntp.org {
+         }
+         server 3.ubnt.pool.ntp.org {
+         }
+     }
+     syslog {
+         global {
+             facility all {
+                 level notice
+             }
+             facility protocols {
+                 level debug
+             }
+         }
+     }
+ }

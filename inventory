@@ -23,3 +23,6 @@ observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falk
 
 [website]
 cepheus.uberspace.de ansible_ssh_user="ffddorf"
+
+[test]
+192.168.1.1 ansible_ssh_user=ubnt
