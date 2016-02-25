@@ -1,0 +1,17 @@
+---
+
+- name: Check if bird is installed
+  command: dpkg-query -W bird
+  register: bird_package_check
+  failed_when: bird_package_check.rc > 1
+  changed_when: bird_package_check.rc == 1
+
+- name: Download bird package
+  get_url:
+    url="http://ftp.de.debian.org/debian/pool/main/b/bird/bird_1.4.5-1~bpo70+1_mips.deb"
+    dest="/root/bird_1.4.5-1~bpo70+1_mips.deb"
+  when: bird_package_check.rc == 1
+
+- name: Install bird package
+  command: dpkg -i /root/bird_1.4.5-1~bpo70+1_mips.deb
+  when: bird_package_check.rc == 1
