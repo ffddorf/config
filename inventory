@@ -6,6 +6,10 @@ site
 edge
 core
 
+[site:children]
+site-generic
+site-edgeos
+
 [edge]
 edge01.freifunk-duesseldorf.de syscontact=nomaster syslocation="Speedbone, Berlin" seq=1
 edge02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Speedbone, Berlin" seq=2
@@ -14,15 +18,15 @@ edge02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Speedbone, Berli
 core01.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" seq=1
 core02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" seq=2
 
-[site]
-netminion sitename=netminion siteip=130.180.92.229 seq=1
+[site-generic]
 nomaster  sitename=nomaster siteip=176.9.74.50 seq=2
+
+[site-edgeos]
+netminion ansible_ssh_host=130.180.92.229 sitename=netminion siteip=130.180.92.229 seq=1
+local-test ansible_ssh_host=192.168.1.1 sitetunnel=no seq=3
 
 [observium]
 observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland"
 
 [website]
 cepheus.uberspace.de ansible_ssh_user="ffddorf"
-
-[test]
-192.168.1.1 ansible_ssh_user=ubnt
