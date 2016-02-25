@@ -1,0 +1,30 @@
+{% if core_gretun_enable %}
+    {% for partner in groups['core'] %}
+
+    {# set partner sequence number #}
+    {% set partner_seq = hostvars[partner].seq %}
+
+    {# select prefix for tunnels with me based on core sequence number #}
+    {% set tunnel_prefix = tunnel_ipv4 | ipsubnet(tunnel_subnet_size,partner_seq) %}
+
+    {# select prefix for site tunnels (1st /20) #}
+    {% set tunnel_prefix_site = tunnel_prefix | ipsubnet(20,1) %}
+
+    {# select network for this tunnel based on site sequence number (/31) #}
+    {% set tunnel_network = tunnel_prefix_site | ipsubnet(31,seq) %}
+
+    {# get local ip for this tunnel (1st address) #}
+    {# TODO: fix bug #13716 for real #}
+    {% set tunnel_address = tunnel_network | ipaddr('1') | ipaddr('address') %}
+
+    tunnel tun{{ '%03d' % partner_seq }} {
+        address {{ tunnel_address }}/31
+        encapsulation gre
+        local-ip {{ ansible_default_ipv4.address }}
+        remote-ip {{ hostvars[partner].ansible_default_ipv4.address }}
+        mtu 1400
+        multicast disable
+        ttl 255
+    }
+    {% endfor %}
+{% endif %}
