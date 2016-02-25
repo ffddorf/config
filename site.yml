@@ -39,4 +39,5 @@
 - name: Configure site routers (edgeos)
   hosts: site-edgeos
   roles:
+  - { role: router, tags: ["site-edgeos","site"] }
   - { role: site, tags: ["site-edgeos","site"] }
