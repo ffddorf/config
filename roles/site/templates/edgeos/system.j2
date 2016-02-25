@@ -2,7 +2,7 @@ system {
      login {
          user ubnt {
              authentication {
-                 encrypted-password $1$zKNoUbAo$gomzUbYvgyUMcD436Wo66.
+                 encrypted-password $6$/iwuEf61$y/CYY825ldThPc83qDo.RHwLmsIsyYrzmNA/SdIMNrlcHvQrGBO6pVaZpZv1OwLFdMCWnQAYDvvWSftOE1jpK0
                  {% for user in admins %}
                     {% for key in user.sshkeys %}
                     {% set key_props = key.split(' ') %}
