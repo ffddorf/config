@@ -1,0 +1,11 @@
+protocols {
+    static {
+        {% if 'default_gw' in wan %}
+        route 0.0.0.0/0 {
+            next-hop {{ wan.default_gw }} {
+                distance 1
+            }
+        }
+        {% endif %}
+    }
+}
