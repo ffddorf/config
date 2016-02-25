@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+{# todo #}
+router id 10.0.20.1;
+log syslog all;
+
+protocol kernel freifunk {
+  device routes;
+  export all;
+  kernel table 16;
+};
+
+protocol device {
+  scan time 2;
+};
