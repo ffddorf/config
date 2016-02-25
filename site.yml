@@ -36,7 +36,7 @@
   - { role: core, tags: core }
   - { role: dns-resolver, tags: dns-resolver }
 
-- name: Configure site routers (testing)
-  hosts: test
+- name: Configure site routers (edgeos)
+  hosts: site-edgeos
   roles:
-  - { role: site, tags: site-test }
+  - { role: site, tags: ["site-edgeos","site"] }
