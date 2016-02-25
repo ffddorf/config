@@ -1,4 +1,4 @@
 ---
 
-- include: config-edgeos/make.yml
+- include: config-edgeos.yml
 - include: bird.yml

@@ -3,10 +3,19 @@ system {
          user ubnt {
              authentication {
                  encrypted-password $1$zKNoUbAo$gomzUbYvgyUMcD436Wo66.
-                 public-keys marcus {
-                     key AAAAB3NzaC1yc2EAAAABIwAAAQEAsuvLZVNr6xD3pVc51A5l2OTTXDob+QZobf36kIbjHDONju6WrFbWT/E3tKRwW9IXsDXOMVHBNpbp+7KW/6snUsATKg8Oz6EgKAgVaWYaFTdP6VYB55bTgvKkwRfBE1AnzcuVLmsSKRT0wkSgNtVBwahWG75slHqZ4eLB8yq5Kx/GJclRnTSdokh/xlF0SR6MDBjCnPrlm917O/xzXiGdxPwP+3FPqflSxGMEy7y2SGuoKiIi3GJ2nZYv+Od/B4vWW5PqhvOeYR4DSDgWu/yw/XMWisbXO+C6CjfLBlmm9taKeN4yOka4Lh7DJU1Mm/Oui21eSKXZwbNGyU2u/fkHfQ==
-                     type ssh-rsa
-                 }
+                 {% for user in admins %}
+                    {% for key in user.sshkeys %}
+                    {% set key_props = key.split(' ') %}
+                    {% set key_type = key_props[0] %}
+                    {% set key_phrase = key_props[1] %}
+                    {% set key_name = key_props[2] %}
+
+                     public-keys {{ key_name }} {
+                         key {{ key_phrase }}
+                         type {{ key_type }}
+                     }
+                    {% endfor %}
+                 {% endfor %}
              }
              level admin
          }

@@ -1,4 +1,0 @@
----
-
-- name: Configure system config
-  template: src=edgeos/system.j2 dest=/config/fragments/system.config

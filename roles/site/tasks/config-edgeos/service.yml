@@ -1,4 +1,0 @@
----
-
-- name: Configure services
-  template: src=edgeos/service.j2 dest=/config/fragments/service.config
