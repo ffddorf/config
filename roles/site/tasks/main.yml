@@ -1,4 +1,4 @@
 ---
 
-- include: config-edgeos.yml
+- include: edgeos-config.yml
 - include: bird.yml
