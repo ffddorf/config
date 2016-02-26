@@ -1,4 +1,13 @@
 ---
 
-- include: edgeos-config.yml
-- include: bird.yml
+- name: EdgeOS - Config
+  include: edgeos-config.yml
+
+- name: EdgeOS - Load config
+  include: edgeos-load.yml
+
+- name: EdgeOS - Commit config
+  include: edgeos-commit.yml
+
+- name: BIRD
+  include: bird.yml
