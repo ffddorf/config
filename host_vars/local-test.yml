@@ -1,0 +1,9 @@
+---
+
+wan:
+  interface: eth1
+  mode: dhcp
+
+interfaces:
+  eth0:
+    address: 192.168.1.1/24

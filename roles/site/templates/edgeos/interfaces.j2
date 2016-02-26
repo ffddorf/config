@@ -1,0 +1,23 @@
+interfaces {
+    {% for interface_num in range(0,eth_interface_count) %}
+     {% set interface_name = 'eth'+('%d' % interface_num) %}
+     ethernet {{ interface_name }} {
+         {% if wan.interface == interface_name %}
+            {% if wan.mode == 'dhcp' %}
+            address dhcp
+            {% else %}
+            address {{ wan.address }}
+            {% endif %}
+         {% else %}
+            {% if interface_name in interfaces %}
+            address {{ interfaces[interface_name].address }}
+            {% endif %}
+         {% endif %}
+         {# todo: add firewall options #}
+     }
+    {% endfor %}
+     loopback lo {
+        address {{ loopback_address }}/32
+     }
+    {% include 'tunnels.j2' %}
+ }

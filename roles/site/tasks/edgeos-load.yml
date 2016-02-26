@@ -1,0 +1,10 @@
+---
+
+- name: Deploy script
+  copy: src=files/edgeos-load.sh dest=/root/edgeos-load.sh mode="o+x"
+
+- name: Load config
+  shell: /root/edgeos-load.sh config.ansible
+  register: load_output
+  failed_when: load_output.rc > 0
+  changed_when: false

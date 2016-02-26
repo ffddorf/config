@@ -1,0 +1,4 @@
+---
+
+ansible_ssh_user: ubnt
+ansible_become: yes

@@ -1,0 +1,4 @@
+---
+
+- name: Configure system
+  template: src=templates/edgeos/main.j2 dest=/config/config.ansible

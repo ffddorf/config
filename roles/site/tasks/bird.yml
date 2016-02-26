@@ -1,0 +1,7 @@
+---
+
+- include: bird-install.yml
+
+- name: Configure service
+  template: src=bird.conf.j2 dest=/etc/bird/bird.conf
+  notify: birdc configure

@@ -1,0 +1,46 @@
+system {
+     host-name {{ inventory_hostname }}
+     login {
+         user ubnt {
+             authentication {
+                 encrypted-password $6$/iwuEf61$y/CYY825ldThPc83qDo.RHwLmsIsyYrzmNA/SdIMNrlcHvQrGBO6pVaZpZv1OwLFdMCWnQAYDvvWSftOE1jpK0
+                 {% for user in admins %}
+                    {% for key in user.sshkeys %}
+                    {% set key_props = key.split(' ') %}
+                    {% set key_type = key_props[0] %}
+                    {% set key_phrase = key_props[1] %}
+                    {% set key_name = key_props[2] %}
+
+                     public-keys {{ key_name }} {
+                         key {{ key_phrase }}
+                         type {{ key_type }}
+                     }
+                    {% endfor %}
+                 {% endfor %}
+             }
+             level admin
+         }
+     }
+     name-server 8.8.8.8
+     name-server 8.8.4.4
+     ntp {
+         server 0.ubnt.pool.ntp.org {
+         }
+         server 1.ubnt.pool.ntp.org {
+         }
+         server 2.ubnt.pool.ntp.org {
+         }
+         server 3.ubnt.pool.ntp.org {
+         }
+     }
+     syslog {
+         global {
+             facility all {
+                 level notice
+             }
+             facility protocols {
+                 level debug
+             }
+         }
+     }
+ }

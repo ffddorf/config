@@ -1,0 +1,9 @@
+---
+
+wan:
+  interface: eth0
+  mode: dhcp
+
+interfaces: {}
+
+core_gretun_enable: false

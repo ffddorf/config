@@ -1,0 +1,9 @@
+---
+
+wan:
+  interface: eth2
+  mode: static
+  address: 130.180.92.229/29
+  default_gw: 130.180.92.225
+
+core_gretun_enable: true

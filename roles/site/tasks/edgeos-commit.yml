@@ -1,0 +1,10 @@
+---
+
+- name: Deploy script
+  copy: src=files/edgeos-load-commit.sh dest=/root/edgeos-load-commit.sh mode="o+x"
+
+- name: Load, commit config
+  shell: /root/edgeos-load-commit.sh config.ansible
+  register: commit_output
+  failed_when: commit_output.rc > 0
+  changed_when: false
