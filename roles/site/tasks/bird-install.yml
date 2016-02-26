@@ -5,6 +5,7 @@
   register: bird_package_check
   failed_when: bird_package_check.rc > 1
   changed_when: bird_package_check.rc == 1
+  always_run: yes
 
 - name: Download bird package
   get_url:
