@@ -4,6 +4,4 @@
 
 - name: Configure service
   template: src=bird.conf.j2 dest=/etc/bird/bird.conf
-
-- name: Reload service
-  command: birdc configure
+  notify: birdc configure
