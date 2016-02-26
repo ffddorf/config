@@ -1,15 +1,54 @@
 # {{ ansible_managed }}
 
-{# todo #}
-router id 10.0.20.1;
+router id {{ loopback_address }};
 log syslog all;
 
+table MASTER;
+table BACKBONE;
+
+filter transfer_nets {
+  if net ~ 10.0.0.0/21 then accept;
+  if net ~ 192.168.0.0/16 then accept;
+  reject;
+};
+
+protocol kernel backbone {
+  table BACKBONE;
+  export filter transfer_nets;
+};
+
+filter default_net {
+  if net = 0.0.0.0/0 then accept;
+  if net ~ 10.0.0.0/21 then reject;
+  accept;
+};
+
 protocol kernel freifunk {
+  table MASTER;
   device routes;
-  export all;
+  export filter default_net;
   kernel table 16;
 };
 
 protocol device {
   scan time 2;
 };
+
+protocol pipe {
+  table MASTER;
+  peer table BACKBONE;
+  import all;
+  export none;
+};
+
+{% if core_gretun_enable %}
+protocol ospf ddorf {
+  table BACKBONE;
+
+  area {{ seq }} {
+    {% for partner in groups['core'] %}
+    interface "tun{{ '%03d' % hostvars[partner].seq }}";
+    {% endfor %}
+  };
+};
+{% endif %}
