@@ -1,0 +1,4 @@
+---
+
+- name: Save running EdgeOS config for next boot
+  shell: /opt/vyatta/sbin/vyatta-save-config.pl
