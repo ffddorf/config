@@ -13,6 +13,15 @@ protocol device {
   scan time 2;
 };
 
+protocol ospf ddorf {
+  area 0 {
+    interface "lo" {
+      stub;
+    };
+    interface "tun-core*";
+  };
+};
+
 {% if local_as is defined %}
 filter local_as {
 {% if local_as.ipv4 is defined %}
@@ -50,17 +59,6 @@ protocol bgp {{ peer.name }} from uplink {
 {% endif %}
 {% endfor %}
 
-{% endif %}
-protocol ospf ddorf {
-  area 0 {
-    interface "lo" {
-      stub;
-    };
-    interface "tun-core*";
-  };
-};
-
-
 {# select prefix for loopback address of the peer based on sequence number #}
 {% set loopback_prefix = internal_ipv4 | ipsubnet(loopback_subnets.backbone.ipv4_size,loopback_subnets.backbone.seq) %}
 
@@ -75,7 +73,9 @@ protocol ospf ddorf {
 {# select network for this tunnel based on my (edge) sequence number (/31) #}
 {% set peer_loopback_address = loopback_prefix_core | ipaddr(peer_seq) %}
 
-protocol bgp {{ peer }} {
+protocol bgp core{{ '%03d' % peer_seq }} from internal {
   neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
 };
 {% endfor %}
+
+{% endif %}
