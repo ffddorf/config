@@ -47,6 +47,8 @@ iface {{ interface_name }} inet static
 
 {% for partner in downlink_tunnel_partners %}
 
+{% if hostvars[partner].siteip is defined %}
+
 {# get partner sequence number for this tunnel #}
 {% set partner_seq = hostvars[partner].seq %}
 
@@ -82,6 +84,8 @@ iface {{ interface_name }} inet manual
 iface {{ interface_name }} inet static
   address {{ tunnel_address }}
   netmask 31
+
+{% endif %}
 
 {% endfor %}
 

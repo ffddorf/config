@@ -1,7 +1,7 @@
 ---
 
 - name: Gather facts
-  hosts: backbone
+  hosts: router
   tasks:
     - name: Execute setup
       action: setup

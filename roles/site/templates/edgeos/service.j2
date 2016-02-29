@@ -1,4 +1,29 @@
 service {
+     dhcp-server {
+{% for interface_name, interface in interfaces.iteritems() %}
+{% if interface.dhcp.enable %}
+         shared-network-name {{ interface_name }} {
+             subnet {{ interface.address | ipsubnet() }} {
+                 default-router {{ interface.address | ipaddr('address') }}
+                 dns-server {{ interface.address | ipaddr('address') }}
+                 start {{ interface.address | ipsubnet() | ipaddr(interface.dhcp.start) | ipaddr('address') }} {
+                     stop {{ interface.address | ipsubnet() | ipaddr(interface.dhcp.start + interface.dhcp.size) | ipaddr('address') }}
+                 }
+             }
+         }
+{% endif %}
+{% endfor %}
+     }
+     dns {
+         forwarding {
+{% for vlan in vlans %}
+    {% set vlan_name = vlan_interface + '.' + loop.index|string %}
+    {% if vlan_name in interfaces %}
+             listen-on {{ vlan_name }}
+    {% endif %}
+{% endfor %}
+         }
+     }
      gui {
      }
      ssh {
