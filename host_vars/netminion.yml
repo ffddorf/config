@@ -6,4 +6,12 @@ wan:
   address: 130.180.92.229/29
   default_gw: 130.180.92.225
 
+interfaces:
+  eth1:
+    address: 10.10.0.1/24
+    dhcp:
+      enable: yes
+      start: 50
+      size: 50
+
 core_gretun_enable: true
