@@ -14,6 +14,16 @@ service {
 {% endif %}
 {% endfor %}
      }
+     dns {
+         forwarding {
+{% for vlan in vlans %}
+    {% set vlan_name = vlan_interface + '.' + loop.index|string %}
+    {% if vlan_name in interfaces %}
+             listen-on {{ vlan_name }}
+    {% endif %}
+{% endfor %}
+         }
+     }
      gui {
      }
      ssh {
