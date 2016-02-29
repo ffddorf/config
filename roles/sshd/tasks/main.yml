@@ -4,6 +4,9 @@
   template: src=sshd.conf.j2 dest=/etc/ssh/sshd_config validate='/usr/sbin/sshd -T -f %s'
   notify: restart sshd
 
+- name: Create ssh configuration directory for root user
+  file: dest=/root/.ssh state=directory mode=0700
+
 - name: Configure authorized keys
   template: src=authorized_keys.j2 dest=/root/.ssh/authorized_keys
 

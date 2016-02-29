@@ -5,6 +5,8 @@
 
 - name: Configure hostsfile (IPv4)
   lineinfile: line='{{ ansible_default_ipv4.address }} {{ ansible_nodename }}' dest=/etc/hosts regexp={{ ansible_default_ipv4.address }}
+  when: ansible_default_ipv4.address is defined
 
 - name: Configure hostsfile (IPv6)
   lineinfile: line='{{ ansible_default_ipv6.address }} {{ ansible_nodename }}' dest=/etc/hosts regexp={{ ansible_default_ipv6.address }}
+  when: ansible_default_ipv6.address is defined

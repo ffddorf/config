@@ -41,6 +41,7 @@ iface {{ interface_name }} inet static
 
 {% endfor %}
 
+{% if gretun is defined %}
 # Tunnel to Rheinland Backbone
 
 {% for tun in gretun %}
@@ -70,3 +71,4 @@ iface {{ tun.interface }} inet6 static
 {% endif %}
 
 {% endfor%}
+{% endif %}

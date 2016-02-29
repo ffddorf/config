@@ -2,3 +2,6 @@
 
 bridges: []
 gretun: []
+snmp_community: public
+syscontact: undefined
+syslocation: undefined

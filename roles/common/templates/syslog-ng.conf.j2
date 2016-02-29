@@ -22,7 +22,7 @@ source src {
   internal();
 };
 
-{% if inventory_hostname in groups['observium'] %}
+{% if 'observium' in group_names %}
 
 source net {
   udp6();
