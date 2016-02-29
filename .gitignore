@@ -1,3 +1,4 @@
 .vault_password
 .facts_cache
 *.pyc
+.vagrant
