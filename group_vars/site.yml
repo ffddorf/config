@@ -9,3 +9,12 @@ tunnel_subnets:
   site:
     ipv4_size: 19
     seq: 1
+
+vlan_interface: eth1
+vlans:
+  - name: mgmt
+    subnet_seq: 0
+  - name: user
+    subnet_seq: 1
+  - name: mesh
+    subnet_seq: 2

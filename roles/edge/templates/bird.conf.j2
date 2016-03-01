@@ -13,11 +13,25 @@ protocol device {
   scan time 2;
 };
 
+protocol ospf ddorf {
+  area 0 {
+    interface "lo" {
+      stub;
+    };
+    interface "tun-core*";
+  };
+};
+
 {% if local_as is defined %}
 filter local_as {
 {% if local_as.ipv4 is defined %}
   if net ~ {{ local_as.ipv4 }} then accept;
 {% endif %}
+  reject;
+};
+
+filter is_default {
+  if net = 0.0.0.0/0 then accept;
   reject;
 };
 
@@ -27,6 +41,12 @@ template bgp uplink {
   export filter local_as;
   next hop self;
   multihop 64;
+};
+
+template bgp internal {
+  local as {{ local_as.number | default(0) }};
+  export filter is_default;
+  source address {{ loopback_address }};
 };
 
 {% for peer in peers %}
@@ -39,12 +59,23 @@ protocol bgp {{ peer.name }} from uplink {
 {% endif %}
 {% endfor %}
 
-{% endif %}
-protocol ospf ddorf {
-  area 0 {
-    interface "lo" {
-      stub;
-    };
-    interface "tun-core*";
-  };
+{# select prefix for loopback address of the peer based on sequence number #}
+{% set loopback_prefix = internal_ipv4 | ipsubnet(loopback_subnets.backbone.ipv4_size,loopback_subnets.backbone.seq) %}
+
+{# select prefix for core loopback addresses #}
+{% set loopback_prefix_core = loopback_prefix | ipsubnet(22,1) %}
+
+{% for peer in groups['core'] %}
+
+{# get peer sequence number for this session #}
+{% set peer_seq = hostvars[peer].seq %}
+
+{# select network for this tunnel based on my (edge) sequence number (/31) #}
+{% set peer_loopback_address = loopback_prefix_core | ipaddr(peer_seq) %}
+
+protocol bgp core{{ '%03d' % peer_seq }} from internal {
+  neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
 };
+{% endfor %}
+
+{% endif %}
