@@ -18,10 +18,6 @@ gretun:
     remote: 185.66.193.1
     ip4: 100.64.3.3/31
     ip6: 2a03:2260:0:18b::2/64
-  - interface: tun-core01
-    remote: 176.9.19.75
-    ip4: 100.64.251.2/31
-    ip6: 2a03:2260:3004:1::1/64
 
 peers:
   - name: ber_a
