@@ -19,8 +19,7 @@ protocol kernel backbone {
 
 filter default_net {
   if net = 0.0.0.0/0 then accept;
-  if net ~ 10.0.0.0/21 then reject;
-  accept;
+  reject;
 };
 
 protocol kernel freifunk {
@@ -49,6 +48,10 @@ protocol ospf ddorf {
     {% for partner in groups['core'] %}
     interface "tun{{ '%03d' % hostvars[partner].seq }}";
     {% endfor %}
+
+    interface "lo" {
+        stub;
+    };
   };
 };
 {% endif %}
@@ -67,8 +70,9 @@ filter is_default {
 };
 
 template bgp internal {
+  table MASTER;
   local as {{ local_as.number | default(0) }};
-  export filter is_default;
+  export none;
   source address {{ loopback_address }};
 };
 
