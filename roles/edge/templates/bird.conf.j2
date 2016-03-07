@@ -23,6 +23,9 @@ protocol ospf ddorf {
     interface "lo" {
       stub;
     };
+    interface "{{ gretun | join('", "', attribute='interface') }}" {
+      stub;
+    };
     interface "tun-core*";
   };
 };
