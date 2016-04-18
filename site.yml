@@ -41,3 +41,5 @@
   roles:
   - { role: router, tags: ["site-edgeos","site"] }
   - { role: site, tags: ["site-edgeos","site"] }
+
+- include: vmhosts.yml
