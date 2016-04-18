@@ -7,6 +7,7 @@
   - libvirt-daemon-system
   - python-libvirt
   - python-lxml
+  - virtinst
 
 - name: Enable service
   service: name=libvirtd enabled=yes
@@ -14,4 +15,4 @@
 
 - include: network.yml
 
-- include: storage.yml
+- include: debianinstall.yml

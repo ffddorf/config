@@ -1,4 +1,0 @@
----
-
-- name: Enable storage pool
-  virt_pool: name=virtimages autostart=yes

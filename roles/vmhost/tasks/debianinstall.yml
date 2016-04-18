@@ -1,0 +1,23 @@
+---
+
+- include: httpserve.yml
+
+- name: Install Debian Jessie
+  command: >
+    virt-install \
+    --name {{ item }} \
+    --ram 512 \
+    --file=/var/lib/libvirt/images/{{ item }}.qcow2 \
+    --file-size=1 \
+    --vcpus 1 \
+    --os-type linux \
+    --os-variant generic \
+    --network network=routed \
+    --graphics none \
+    --console pty,target_type=serial \
+    --location 'http://mirror.hetzner.de/debian/packages/dists/jessie/main/installer-amd64/' \
+    --extra-args 'console=ttyS0,115200n8 serial auto=true priority=critical url=http://{{ ansible_default_ipv4.address }}/preseed.cfg' \
+    --noautoconsole
+  args:
+    creates: /var/lib/libvirt/images/{{ item }}.qcow2
+  with_items: guests

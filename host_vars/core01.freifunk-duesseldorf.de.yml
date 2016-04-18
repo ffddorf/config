@@ -8,3 +8,5 @@ bridges:
   - name: br0
     ipv4: 100.64.254.1/24
     ipv6: 2a03:2260:3004:f00::1/56
+guests:
+  - supernode01
