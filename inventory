@@ -28,3 +28,7 @@ observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falk
 
 [website]
 cepheus.uberspace.de ansible_ssh_user="ffddorf"
+
+[vmhosts]
+core01.freifunk-duesseldorf.de
+core02.freifunk-duesseldorf.de

@@ -1,0 +1,7 @@
+---
+
+- name: Install VM Hosts
+  hosts: vmhosts
+  roles:
+    - vmhost
+  tags: vmhost

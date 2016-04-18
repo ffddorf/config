@@ -1,0 +1,7 @@
+---
+
+- name: start libvirtd
+  service: name=libvirtd state=started
+
+- name: start routed network
+  virt_net: name=routed command=create

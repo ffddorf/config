@@ -1,0 +1,8 @@
+---
+
+- name: Configure routed network
+  virt_net: command=define name=routed xml='{{ lookup("template", "network-routed.xml.j2") }}'
+
+- name: Enable routed network
+  virt_net: name=routed autostart=yes
+  notify: start routed network

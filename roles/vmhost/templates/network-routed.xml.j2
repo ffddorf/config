@@ -1,0 +1,8 @@
+<network ipv6='yes'>
+    <name>routed</name>
+    <forward mode='route' />
+
+    {% set network = ansible_default_ipv6.address | ipsubnet(ansible_default_ipv6.prefix) | ipaddr('net') %}
+    <ip family="ipv6" address="{{ network | ipaddr(2) | ipaddr('address') }}" prefix="{{ network | ipaddr('prefix') }}" />
+{# <route family="ipv6" address="{{ network }}" prefix="64" gateway="{{ network | ipaddr(2) }}" /> #}
+</network>
