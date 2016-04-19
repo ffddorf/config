@@ -19,14 +19,16 @@ core01.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkens
 core02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" seq=2 ansible_ssh_user=root
 
 [site-generic]
-nomaster  sitename=nomaster siteip=176.9.74.50 seq=2
 
 [site-edgeos]
 netminion ansible_ssh_host=130.180.92.229 sitename=netminion siteip=130.180.92.229 seq=1
-local-test ansible_ssh_host=192.168.1.1 sitetunnel=no seq=3
 
 [observium]
 observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" ansible_ssh_user=root
 
 [website]
 cepheus.uberspace.de ansible_ssh_user="ffddorf"
+
+[vmhosts]
+core01.freifunk-duesseldorf.de
+core02.freifunk-duesseldorf.de

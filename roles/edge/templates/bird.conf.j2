@@ -13,9 +13,17 @@ protocol device {
   scan time 2;
 };
 
+# used for getting tunnel device routes into bird
+protocol direct {
+    interface "{{ gretun | join('", "', attribute='interface') }}";
+}
+
 protocol ospf ddorf {
   area 0 {
     interface "lo" {
+      stub;
+    };
+    interface "{{ gretun | join('", "', attribute='interface') }}" {
       stub;
     };
     interface "tun-core*";
