@@ -30,7 +30,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: "ip route add 8.8.8.8 via 172.28.128.1 || /bin/true"
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "site.yml"
+    ansible.playbook = "main.yml"
     ansible.groups = {
       "backbone:children" => ["core", "edge"],
       "site" => [],

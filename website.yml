@@ -1,0 +1,9 @@
+---
+
+- name: Configure SSH users for website deployment
+  hosts:
+  - website
+  roles:
+  - { role: ssh, tags: ssh}
+
+

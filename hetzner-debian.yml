@@ -1,0 +1,11 @@
+---
+
+- name: prepare Hetzner Debian server
+  hosts: hetzner-debian
+  gather_facts: False
+  become: False
+  tasks:
+  - name: update package cache
+    raw: apt-get update
+  - name: install Python
+    raw: apt-get install -y python

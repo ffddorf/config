@@ -1,0 +1,9 @@
+---
+
+- name: Set up common configuration
+  hosts:
+  - backbone
+  - observium
+  roles:
+  - { role: common, tags: common }
+  - { role: sshd, tags: sshd }

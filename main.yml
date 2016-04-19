@@ -1,0 +1,16 @@
+---
+
+- include: hetzner-debian.yml
+- include: vmhosts.yml
+
+- name: Gather facts
+  hosts: router
+  tasks:
+    - name: Execute setup
+      action: setup
+
+- include: website.yml
+- include: common.yml
+- include: observium.yml
+- include: edge.yml
+- include: site.yml

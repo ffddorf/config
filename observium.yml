@@ -1,0 +1,4 @@
+- name: Configure monitoring
+  hosts: observium
+  roles:
+  - { role: observium, tags: observium }
