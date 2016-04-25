@@ -9,3 +9,8 @@
     raw: apt-get update
   - name: install Python
     raw: apt-get install -y python
+  - name: add include statement to configuration file
+    lineinfile:
+      dest: /etc/network/interfaces
+      line: 'source /etc/network/interfaces.d/*'
+      regexp: '^source'

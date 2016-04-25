@@ -27,18 +27,14 @@ netminion ansible_ssh_host=130.180.92.229 sitename=netminion siteip=130.180.92.2
 observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" ansible_ssh_user=root
 
 [website]
-<<<<<<< Updated upstream
-cepheus.uberspace.de ansible_ssh_user="ffddorf"
+cepheus.uberspace.de ansible_ssh_user="ffddorf" ansible_become=false
 
 [vmhosts]
 core01.freifunk-duesseldorf.de
 core02.freifunk-duesseldorf.de
-=======
-cepheus.uberspace.de ansible_ssh_user="ffddorf" ansible_become=False
 
 [hetzner-debian]
 core01.freifunk-duesseldorf.de ansible_ssh_user=root
 core02.freifunk-duesseldorf.de ansible_ssh_user=root
 edge03.freifunk-duesseldorf.de ansible_ssh_user=root
 edge04.freifunk-duesseldorf.de ansible_ssh_user=root
->>>>>>> Stashed changes
