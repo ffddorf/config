@@ -4,3 +4,7 @@ loopback_subnets:
   edge:
     ipv4_size: 22
     seq: 0
+
+supernode_peers:
+  - seq: 1
+    loopback_ipv4: 192.168.122.244

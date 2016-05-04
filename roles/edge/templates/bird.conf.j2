@@ -86,4 +86,11 @@ protocol bgp core{{ '%03d' % peer_seq }} from internal {
 };
 {% endfor %}
 
+
+{% for peer in supernode_peers %}
+protocol bgp supernode{{ '%03d' % peer.seq }} from internal {
+  neighbor {{ peer.loopback_ipv4 }} as {{ local_as.number }};
+};
+{% endfor %}
+
 {% endif %}
