@@ -19,6 +19,7 @@ protocol ospf ddorf {
       stub;
     };
     interface "tun-edge*";
+    interface "virbr*";
   };
 {% for site in groups.site %}
   area {{ hostvars[site].seq }} {
