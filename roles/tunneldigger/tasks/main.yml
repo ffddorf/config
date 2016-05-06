@@ -1,0 +1,80 @@
+---
+- name: Load kernel modules
+  modprobe: name={{ item }} state=present
+  with_items:
+    - l2tp_ip
+    - l2tp_ip6
+    - l2tp_core
+    - l2tp_eth
+    - l2tp_netlink
+    - nf_conntrack_netlink
+    - nf_conntrack
+    - nfnetlink
+    - ebtables
+
+- name: Make kernel modules persistent
+  lineinfile: dest=/etc/modules-load.d/tunneldigger.conf line={{ item }} create=yes
+  with_items:
+    - l2tp_ip
+    - l2tp_ip6
+    - l2tp_core
+    - l2tp_eth
+    - l2tp_netlink
+    - nf_conntrack_netlink
+    - nf_conntrack
+    - nfnetlink
+    - ebtables
+
+- name: install requirements
+  apt: name={{ item }} state=installed
+  with_items:
+    - git
+    - python-pip
+    - python-virtualenv
+    - python-dev
+    - iproute
+    - bridge-utils
+    - libnetfilter-conntrack3
+    - libevent-dev
+    - ebtables
+    - virtualenv
+    - gcc
+
+- name: Fetch tunneldigger
+  git: repo=https://github.com/ffrl/tunneldigger.git dest=/srv/tunneldigger update=no
+
+- name: create virtualenv
+  command: virtualenv /srv/tunneldigger/ -p python2.7 creates="/srv/tunneldigger/"
+
+- name: install tunneldigger virtualenv requirements
+  pip: requirements=/srv/tunneldigger/broker/requirements.txt virtualenv=/srv/tunneldigger
+
+- name: Configure broker
+  template: src=l2tp_broker.cfg.j2 dest=/srv/tunneldigger/l2tp_broker.cfg
+
+- name: Copy start script
+  template: src=start-broker.sh.j2 dest=/srv/tunneldigger/start-broker.sh mode=u+x
+
+- name: Create interface scripts directory
+  file: path=/srv/tunneldigger/scripts state=directory
+
+- name:  Copy interface scripts
+  template: src={{ item.src }} dest={{ item.dest }} mode=u+x
+  with_items:
+    - { src: 'bataddif.sh.j2', dest: '/srv/tunneldigger/scripts/bataddif.sh' }
+    - { src: 'batdelif.sh.j2', dest: '/srv/tunneldigger/scripts/batdelif.sh' }
+
+- name: Configure bridge interface
+  template: src=tunneldigger-bridge.j2 dest=/etc/network/interfaces.d/tunneldigger
+
+- name: Configure service
+  template: src=tunneldigger.service.j2 dest=/etc/systemd/system/tunneldigger.service
+  register: tunneldigger_service
+
+- name: Reload systemd units
+  command: systemctl daemon-reload
+  changed_when: no
+  when: tunneldigger_service|changed
+
+- name: Enable service
+  service: name=tunneldigger.service enabled=yes

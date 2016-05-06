@@ -1,0 +1,4 @@
+---
+
+- name: reload
+  service: name=tunneldigger.service state=reloaded

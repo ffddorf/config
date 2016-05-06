@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description = Start tunneldigger L2TPv3 broker
+After = network.target
+
+[Service]
+ExecStart = /srv/tunneldigger/start-broker.sh
+
+[Install]
+WantedBy = multi-user.target
