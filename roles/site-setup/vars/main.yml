@@ -1,0 +1,3 @@
+---
+
+loopback_address: "{{ internal_ipv4 | ipsubnet(21, 0) | ipsubnet(23, 3) | ipaddr(seq) | ipaddr('address') }}"
