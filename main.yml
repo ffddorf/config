@@ -13,4 +13,5 @@
 - include: common.yml
 - include: observium.yml
 - include: edge.yml
-- include: site.yml
+
+- include: site-edgeos.yml
