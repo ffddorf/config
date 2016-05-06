@@ -1,0 +1,7 @@
+---
+
+- name: Configure site routers (generic)
+  hosts: site-generic
+  roles:
+  - { role: router, tags: ["site"] }
+  - { role: site, tags: ["site"] }

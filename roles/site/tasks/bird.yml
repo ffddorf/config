@@ -1,0 +1,11 @@
+---
+
+- name: Install service
+  apt: name=bird state=present
+
+- name: Configure service (IPv4)
+  template: src=bird.conf.j2 dest=/etc/bird/bird.conf validate='bird -pc %s'
+  notify: reload bird
+
+- name: Enable service (IPv4)
+  service: name=bird enabled=yes
