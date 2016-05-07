@@ -1,0 +1,6 @@
+---
+
+- name: Configure tunneldigger endpoint
+  hosts: tunnel
+  roles:
+  - { role: tunneldigger }

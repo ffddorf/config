@@ -5,6 +5,7 @@ site
 [backbone:children]
 edge
 core
+site
 
 [site:children]
 site-generic
@@ -38,3 +39,6 @@ core01.freifunk-duesseldorf.de ansible_ssh_user=root
 core02.freifunk-duesseldorf.de ansible_ssh_user=root
 edge03.freifunk-duesseldorf.de ansible_ssh_user=root
 edge04.freifunk-duesseldorf.de ansible_ssh_user=root
+
+[tunnel]
+tunnel01.freifunk-duesseldorf.de ansible_ssh_user=root
