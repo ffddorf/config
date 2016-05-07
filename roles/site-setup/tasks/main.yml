@@ -1,0 +1,4 @@
+---
+
+- name: Compute common vars for sites
+  include_vars: main.yml

@@ -1,0 +1,11 @@
+---
+
+- name: Gather config for sites
+  hosts: site-generic
+  roles:
+  - { role: site-setup }
+
+- name: Configure common setup for VM guests
+  hosts: vmguests
+  roles:
+  - { role: vm-guest }

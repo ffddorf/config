@@ -1,0 +1,10 @@
+---
+
+- name: Configure interface template
+  template: src=interface-defaults.j2 dest=/etc/network/interfaces
+
+- name: Configure eth interfaces
+  template: src=interfaces.j2 dest=/etc/network/interfaces.d/ethernet
+
+- name: Configure loopback interface
+  template: src=loopback.j2 dest=/etc/network/interfaces.d/loopback

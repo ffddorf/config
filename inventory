@@ -42,3 +42,7 @@ edge04.freifunk-duesseldorf.de ansible_ssh_user=root
 
 [tunnel]
 tunnel01.freifunk-duesseldorf.de ansible_ssh_user=root
+
+[vmguests]
+site01.freifunk-duesseldorf.de
+tunnel01.freifunk-duesseldorf.de

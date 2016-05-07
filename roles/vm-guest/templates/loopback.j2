@@ -1,0 +1,9 @@
+{% if loopback_address is defined %}
+iface lo inet static
+  address {{ loopback_address }}/32
+{% endif %}
+
+{% if public_ipv4 is defined %}
+iface lo inet static
+  address {{ public_ipv4 }}/32
+{% endif %}
