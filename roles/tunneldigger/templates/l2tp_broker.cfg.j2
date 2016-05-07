@@ -1,10 +1,10 @@
 [broker]
 ; IP address the broker will listen and accept tunnels on
-address={{ ipv4_address }}
+address={{ public_ipv4 }}
 ; Ports where the broker will listen on
 port={{ tunneldigger.port }}
 ; Interface with that IP address
-interface={{ interface }}
+;interface=lo
 ; Maximum number of cached cookies, required for establishing a
 ; session with the broker
 max_cookies=1024

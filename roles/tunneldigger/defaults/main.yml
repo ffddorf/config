@@ -1,0 +1,6 @@
+---
+
+tunneldigger:
+  port: 10050
+  mtu: 1364
+  max_tunnels: 100
