@@ -1,0 +1,7 @@
+---
+
+- include: playbooks/supernode-ms/vm-guests.yml
+
+- include: playbooks/supernode-ms/site.yml
+
+- include: playbooks/supernode-ms/tunnel.yml
