@@ -4,7 +4,7 @@ auto tunneldigger
 iface tunneldigger inet manual
   ## Bring up interface
   pre-up brctl addbr $IFACE
-  pre-up ip link set address {{ mac_tunneldigger }} dev $IFACE
+  pre-up ip link set address {{ tunneldigger_mac }} dev $IFACE
   pre-up ip link set dev $IFACE mtu {{ tunneldigger.mtu }}
   pre-up ip link set $IFACE promisc on
   up ip link set dev $IFACE up
