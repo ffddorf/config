@@ -3,6 +3,22 @@
 router id {{ loopback_address }};
 log syslog all;
 
+table vmstatic;
+# tunnel microservice stuff
+{% for host in groups['vmguests'] %}
+{% if hostvars[host].vm_host | default('') == ansible_hostname and hostvars[host].public_ipv4 %}
+protocol static {
+  table vmstatic;
+  route {{ hostvars[host].public_ipv4 }}/32 via {{ hostvars[host].ansible_eth2.ipv4.address }};
+};
+{% endif %}
+{% endfor %}
+protocol kernel {
+  table vmstatic;
+  export all;
+}
+
+
 protocol kernel freifunk {
   device routes;
   export all;
