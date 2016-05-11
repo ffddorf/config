@@ -35,13 +35,10 @@ protocol ospf ddorf {
       stub;
     };
     interface "tun-edge*";
-    interface "virbr*";
   };
-{% for site in groups.site %}
-  area {{ hostvars[site].seq }} {
-    interface "tun-site{{ '%03d' % hostvars[site].seq }}";
+  area 1 {
+    interface "transfer";
   };
-{% endfor %}
 };
 
 {% if local_as is defined %}
