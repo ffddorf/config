@@ -15,6 +15,9 @@ protocol device {
 
 protocol ospf ddorf {
   area {{ seq }} {
+    interface "lo" {
+        stub;
+    };
     interface "eth2";
   };
 };
