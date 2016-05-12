@@ -97,9 +97,9 @@ protocol bgp edge{{ '%03d' % peer_seq }} from internal_edge {
 {# select network for this tunnel based on my (edge) sequence number (/31) #}
 {% set peer_loopback_address = loopback_prefix_site | ipaddr(peer_seq) %}
 
-protocol bgp site{{ '%03d' % peer_seq }} from internal_site {
-  neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
-};
+#protocol bgp site{{ '%03d' % peer_seq }} from internal_site {
+#  neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
+#};
 {% endfor %}
 
 {% endif %}
