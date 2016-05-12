@@ -7,4 +7,4 @@ loopback_subnets:
 
 supernode_peers:
   - seq: 1
-    loopback_ipv4: 192.168.122.244
+    loopback_ipv4: 10.0.6.1
