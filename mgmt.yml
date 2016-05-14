@@ -1,0 +1,6 @@
+---
+
+- name: install management server
+  hosts: mgmt
+  roles:
+    - unifi

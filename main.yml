@@ -12,5 +12,6 @@
 - include: website.yml
 - include: common.yml
 - include: observium.yml
+- include: mgmt.yml
 - include: edge.yml
 - include: site.yml

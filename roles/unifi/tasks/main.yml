@@ -1,0 +1,62 @@
+---
+
+- name: add Debian backports package repository
+  apt_repository:
+    repo: "deb http://mirror.hetzner.de/debian/packages jessie-backports main"
+    state: present
+  register: repo
+
+- name: install requirements
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: "{{ repo | changed }}"
+  with_items:
+    - python-apt
+    - firewalld
+
+- name: install Nginx light webserver package
+  apt:
+    name: nginx-light
+    default_release: jessie-backports
+    state: present
+    update_cache: "{{ repo | changed }}"
+
+- name: add Ubiquiti public GPG key for package signatures
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: C0A52C50
+    state: present
+
+- name: add UniFi package repository
+  apt_repository:
+    repo: "deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti"
+    state: present
+  register: repo
+
+- name: install UniFi controller package
+  apt:
+    name: unifi
+    state: present
+    update_cache: "{{ repo | changed }}"
+
+- name: configure Nginx webserver
+  template:
+    src: unifi.j2
+    dest: /etc/nginx/sites-available/unifi
+  notify: reload nginx
+
+- name: activate configuration for Nginx webserver
+  file:
+    src: ../sites-available/unifi
+    dest: /etc/nginx/sites-enabled/unifi
+    state: link
+  notify: reload nginx
+
+- name: open firewall port for HTTP
+  firewalld:
+    zone: public
+    service: http
+    state: enabled
+    permanent: true
+  notify: reload firewalld
