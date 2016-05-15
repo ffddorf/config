@@ -23,7 +23,7 @@ core02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkens
 [site-generic]
 
 [site-edgeos]
-garagebilk.site.freifunk-duesseldorf.de seq=2 siteip=94.79.144.126
+garagebilk.site.freifunk-duesseldorf.de seq=2 siteip=94.79.144.126 ansible_transport=paramiko
 
 [observium]
 observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" ansible_ssh_user=root
