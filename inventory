@@ -13,6 +13,8 @@ site-edgeos
 [edge]
 edge01.freifunk-duesseldorf.de syscontact=nomaster syslocation="Speedbone, Berlin" seq=1 ansible_ssh_user=root
 edge02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Speedbone, Berlin" seq=2 ansible_ssh_user=root
+edge03.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" seq=3 ansible_ssh_user=root
+edge04.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" seq=4 ansible_ssh_user=root
 
 [core]
 core01.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" seq=1 ansible_ssh_user=root
