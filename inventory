@@ -40,6 +40,10 @@ core01.freifunk-duesseldorf.de ansible_ssh_user=root
 core02.freifunk-duesseldorf.de ansible_ssh_user=root
 edge03.freifunk-duesseldorf.de ansible_ssh_user=root
 edge04.freifunk-duesseldorf.de ansible_ssh_user=root
+mgmt.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" ansible_ssh_user=root
+
+[mgmt]
+mgmt.freifunk-duesseldorf.de
 
 [tunnel]
 tunnel01.freifunk-duesseldorf.de ansible_ssh_user=root
