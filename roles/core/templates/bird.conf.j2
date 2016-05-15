@@ -47,13 +47,6 @@ template bgp internal_edge {
   source address {{ loopback_address }};
 };
 
-template bgp internal_site {
-  local as {{ local_as.number | default(0) }};
-  export filter is_default;
-  rr client;
-  source address {{ loopback_address }};
-};
-
 {# select prefix for loopback address of the peer based on sequence number #}
 {% set loopback_prefix = internal_ipv4 | ipsubnet(loopback_subnets.backbone.ipv4_size,loopback_subnets.backbone.seq) %}
 
@@ -72,19 +65,6 @@ template bgp internal_site {
 {% set peer_loopback_address = loopback_prefix_edge | ipaddr(peer_seq) %}
 
 protocol bgp edge{{ '%03d' % peer_seq }} from internal_edge {
-  neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
-};
-{% endfor %}
-
-{% for peer in groups['site'] %}
-
-{# get peer sequence number for this session #}
-{% set peer_seq = hostvars[peer].seq %}
-
-{# select network for this tunnel based on my (edge) sequence number (/31) #}
-{% set peer_loopback_address = loopback_prefix_site | ipaddr(peer_seq) %}
-
-protocol bgp site{{ '%03d' % peer_seq }} from internal_site {
   neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
 };
 {% endfor %}

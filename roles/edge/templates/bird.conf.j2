@@ -73,6 +73,9 @@ protocol bgp {{ peer.name }} from uplink {
 {# select prefix for core loopback addresses #}
 {% set loopback_prefix_core = loopback_prefix | ipsubnet(22,1) %}
 
+{# select prefix for edge loopback addresses #}
+{% set loopback_prefix_site = loopback_prefix | ipsubnet(23,3) %}
+
 {% for peer in groups['core'] %}
 
 {# get peer sequence number for this session #}
@@ -86,6 +89,18 @@ protocol bgp core{{ '%03d' % peer_seq }} from internal {
 };
 {% endfor %}
 
+{% for peer in groups['site'] %}
+
+{# get peer sequence number for this session #}
+{% set peer_seq = hostvars[peer].seq %}
+
+{# select network for this tunnel based on my (edge) sequence number (/31) #}
+{% set peer_loopback_address = loopback_prefix_site | ipaddr(peer_seq) %}
+
+protocol bgp site{{ '%03d' % peer_seq }} from internal {
+  neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
+};
+{% endfor %}
 
 {% for peer in supernode_peers %}
 protocol bgp supernode{{ '%03d' % peer.seq }} from internal {
