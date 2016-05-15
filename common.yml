@@ -4,6 +4,7 @@
   hosts:
   - backbone
   - observium
+  - mgmt
   roles:
   - { role: common, tags: common }
   - { role: sshd, tags: sshd }
