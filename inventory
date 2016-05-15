@@ -21,7 +21,7 @@ core02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkens
 [site-generic]
 
 [site-edgeos]
-netminion ansible_ssh_host=130.180.92.229 sitename=netminion siteip=130.180.92.229 seq=1
+garagebilk.site.freifunk-duesseldorf.de seq=2 siteip=94.79.144.126
 
 [observium]
 observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" ansible_ssh_user=root
@@ -38,3 +38,10 @@ core01.freifunk-duesseldorf.de ansible_ssh_user=root
 core02.freifunk-duesseldorf.de ansible_ssh_user=root
 edge03.freifunk-duesseldorf.de ansible_ssh_user=root
 edge04.freifunk-duesseldorf.de ansible_ssh_user=root
+
+[tunnel]
+tunnel01.freifunk-duesseldorf.de ansible_ssh_user=root
+
+[vmguests]
+site01.freifunk-duesseldorf.de
+tunnel01.freifunk-duesseldorf.de
