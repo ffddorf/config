@@ -1,0 +1,4 @@
+{% if public_ipv4 is defined %}
+iface eth2 inet static
+  address {{ public_ipv4 }}/32
+{% endif %}

@@ -8,3 +8,6 @@
 
 - name: Configure loopback interface
   template: src=loopback.j2 dest=/etc/network/interfaces.d/loopback
+
+- name: Configure wan interface
+  template: src=wan.j2 dest=/etc/network/interfaces.d/wan
