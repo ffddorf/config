@@ -4,14 +4,18 @@ auto tunneldigger
 iface tunneldigger inet manual
   ## Bring up interface
   pre-up brctl addbr $IFACE
-  pre-up brctl addif $IFACE {{ uplink_interface }}
+  pre-up brctl addif $IFACE eth1
   pre-up ip link set address {{ tunneldigger_mac }} dev $IFACE
   pre-up ip link set dev $IFACE mtu {{ tunneldigger.mtu }}
   pre-up ip link set $IFACE promisc on
   up ip link set dev $IFACE up
-  post-up ebtables -A FORWARD --logical-in $IFACE -j DROP
+  ## configure client isolation
+  post-up ebtables -A FORWARD -i ! eth1 --logical-in tunneldigger -o ! eth1 -j DROP
+  ## add to uplink bridge
+  post-up brctl addif uplink $IFACE
   # Shutdown interface
-  pre-down ebtables -D FORWARD --logical-in $IFACE -j DROP
+  ## remove from uplink bridge
+  pre-down brctl delif uplink $IFACE
+  pre-down ebtables -D FORWARD -i ! eth1 --logical-in tunneldigger -o ! eth1 -j DROP
   down ip link set dev $IFACE down
   post-down brctl delbr $IFACE
-
