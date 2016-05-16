@@ -25,6 +25,11 @@ protocol kernel freifunk {
   kernel table 16;
 };
 
+protocol static {
+  preference 1;
+  route 0.0.0.0/0 unreachable;
+}
+
 protocol device {
   scan time 2;
 };
@@ -39,6 +44,12 @@ protocol ospf ddorf {
   area 1 {
     interface "transfer";
   };
+{% for peer in groups['site-edgeos'] %}
+{% set interface_name = "tun-site" + '%03d' % hostvars[peer].seq %}
+  area {{ hostvars[peer].seq }} {
+    interface "{{ interface_name }}";
+  };
+{% endfor %}
 };
 
 {% if local_as is defined %}
@@ -54,9 +65,21 @@ filter is_default {
   reject;
 };
 
+filter is_natip {
+  if net = {{ nat_ip }}/32 then accept;
+  reject;
+};
+
 template bgp internal_edge {
   local as {{ local_as.number | default(0) }};
-  export none;
+  export filter is_natip;
+  source address {{ loopback_address }};
+};
+
+template bgp internal_site {
+  local as {{ local_as.number | default(0) }};
+  export filter is_default;
+  rr client;
   source address {{ loopback_address }};
 };
 
@@ -78,6 +101,19 @@ template bgp internal_edge {
 {% set peer_loopback_address = loopback_prefix_edge | ipaddr(peer_seq) %}
 
 protocol bgp edge{{ '%03d' % peer_seq }} from internal_edge {
+  neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
+};
+{% endfor %}
+
+{% for peer in groups['site'] %}
+
+{# get peer sequence number for this session #}
+{% set peer_seq = hostvars[peer].seq %}
+
+{# select network for this tunnel based on my (edge) sequence number (/31) #}
+{% set peer_loopback_address = loopback_prefix_site | ipaddr(peer_seq) %}
+
+protocol bgp site{{ '%03d' % peer_seq }} from internal_site {
   neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
 };
 {% endfor %}
