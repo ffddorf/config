@@ -1,3 +1,4 @@
 ---
 
 tunneldigger_interface: eth2
+uplink_interface: eth1
