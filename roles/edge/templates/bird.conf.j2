@@ -54,6 +54,7 @@ template bgp uplink {
 template bgp internal {
   local as {{ local_as.number | default(0) }};
   export filter is_default;
+  next hop self;
   source address {{ loopback_address }};
 };
 
