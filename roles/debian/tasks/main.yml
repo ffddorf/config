@@ -1,0 +1,26 @@
+---
+
+- name: update package cache
+  raw: apt-get update
+
+- name: install Python
+  raw: apt-get install -y python
+
+- name: add include statement to configuration file
+  lineinfile:
+    dest: /etc/network/interfaces
+    line: 'source /etc/network/interfaces.d/*'
+    regexp: '^source'
+
+- name: install Python Software Properties (for auto-upgrades)
+  apt: name=python-software-properties state=present
+
+- name: configure package auto-upgrades
+  template:
+    src: auto-upgrades.j2
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+  register: auto_upgrades
+
+- name: reconfigure apt for auto-upgrades
+  command: dpkg-reconfigure -f noninteractive unattended-upgrades
+  when: "{{ auto_upgrades | changed }}"
