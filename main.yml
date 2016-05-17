@@ -1,6 +1,6 @@
 ---
 
-- include: hetzner-debian.yml
+- include: debian.yml
 - include: vmhosts.yml
 
 - name: Gather facts
@@ -13,4 +13,5 @@
 - include: common.yml
 - include: observium.yml
 - include: edge.yml
+- include: core.yml
 - include: site.yml
