@@ -7,11 +7,8 @@
   - libvirt-daemon-system
   - python-libvirt
   - python-lxml
+  - virtinst
 
 - name: Enable service
   service: name=libvirtd enabled=yes
   notify: start libvirtd
-
-- include: network.yml
-
-- include: storage.yml
