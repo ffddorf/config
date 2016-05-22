@@ -65,6 +65,7 @@ template bgp internal_site {
   export filter is_default;
   rr client;
   source address {{ loopback_address }};
+  next hop self;
 };
 
 {# select prefix for loopback address of the peer based on sequence number #}
