@@ -19,13 +19,13 @@ edge04.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkens
 
 [core]
 core01.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" seq=1 ansible_ssh_user=root
-core02.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" seq=2 ansible_ssh_user=root
+core03.freifunk-duesseldorf.de syscontact=noamster syslocation="OVH, Roubaix" seq=3 ansible_ssh_user=root
 
 [site-generic]
 site01.freifunk-duesseldorf.de ansible_ssh_user=root seq=1
 
 [site-edgeos]
-garagebilk.site.freifunk-duesseldorf.de seq=2 siteip=94.79.144.126 ansible_transport=paramiko
+garagebilk.site.freifunk-duesseldorf.de seq=2 siteip=94.79.144.124 ansible_transport=paramiko
 
 [observium]
 observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" ansible_ssh_user=root
@@ -35,11 +35,11 @@ cepheus.uberspace.de ansible_ssh_user="ffddorf" ansible_become=false
 
 [vmhosts]
 core01.freifunk-duesseldorf.de
-core02.freifunk-duesseldorf.de
+core03.freifunk-duesseldorf.de
 
-[hetzner-debian]
+[debian]
 core01.freifunk-duesseldorf.de ansible_ssh_user=root
-core02.freifunk-duesseldorf.de ansible_ssh_user=root
+core03.freifunk-duesseldorf.de ansible_ssh_user=root
 edge03.freifunk-duesseldorf.de ansible_ssh_user=root
 edge04.freifunk-duesseldorf.de ansible_ssh_user=root
 mgmt.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" ansible_ssh_user=root

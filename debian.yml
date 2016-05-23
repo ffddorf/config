@@ -1,0 +1,8 @@
+---
+
+- name: prepare Debian server
+  hosts: debian
+  gather_facts: False
+  become: False
+  roles:
+  - debian
