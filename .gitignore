@@ -2,3 +2,5 @@
 .facts_cache
 *.pyc
 .vagrant
+
+*.retry
