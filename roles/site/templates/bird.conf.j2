@@ -22,30 +22,27 @@ protocol ospf ddorf {
   };
 };
 
-template bgp internal_edge {
-  local as {{ local_as.number }};
+template bgp internal {
+  local as {{ local_as.number | default(0) }};
   export none;
   source address {{ loopback_address }};
 };
 
 {# select prefix for loopback address of the peer based on sequence number #}
-{% set loopback_prefix = internal_ipv4 | ipsubnet(loopback_subnets.backbone.ipv4_size,loopback_subnets.backbone.seq) %}
+{% set loopback_prefix = internal_ipv4 | ipsubnet(21,0) %}
 
 {# select prefix for edge loopback addresses #}
-{% set loopback_prefix_edge = loopback_prefix | ipsubnet(22,0) %}
+{% set loopback_prefix_core = loopback_prefix | ipsubnet(22,1) %}
 
-{# select prefix for edge loopback addresses #}
-{% set loopback_prefix_site = loopback_prefix | ipsubnet(23,3) %}
-
-{% for peer in groups['edge'] %}
+{% for peer in groups['core'] %}
 
 {# get peer sequence number for this session #}
 {% set peer_seq = hostvars[peer].seq %}
 
 {# select network for this tunnel based on my (edge) sequence number (/31) #}
-{% set peer_loopback_address = loopback_prefix_edge | ipaddr(peer_seq) %}
+{% set peer_loopback_address = loopback_prefix_core | ipaddr(peer_seq) %}
 
-protocol bgp edge{{ '%03d' % peer_seq }} from internal_edge {
+protocol bgp core{{ '%03d' % peer_seq }} from internal {
   neighbor {{ peer_loopback_address | ipaddr('address') }} as {{ local_as.number }};
 };
 {% endfor %}
