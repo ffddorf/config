@@ -7,3 +7,6 @@
 
 # Mac OS X
 .DS_Store
+
+# Jetbrains
+/.idea/
