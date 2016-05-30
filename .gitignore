@@ -4,3 +4,6 @@
 .vagrant
 
 *.retry
+
+# Mac OS X
+.DS_Store
