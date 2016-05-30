@@ -1,6 +1,8 @@
 # Management
 allow-hotplug eth0
+{% if vm_mgmt_enabled %}
 iface eth0 inet dhcp
+{% endif %}
 iface eth0 inet6 auto
 
 # BATMAN
@@ -10,3 +12,6 @@ iface eth1 inet manual
 # Tunnel
 allow-hotplug eth2
 iface eth2 inet dhcp
+{% if public_ipv4 is defined %}
+  post-up ip addr add {{ public_ipv4 }}/32 dev $IFACE
+{% endif %}
