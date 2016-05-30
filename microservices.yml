@@ -5,3 +5,5 @@
 - include: playbooks/supernode-ms/site.yml
 
 - include: playbooks/supernode-ms/tunnel.yml
+
+- include: playbooks/supernode-ms/supernode.yml
