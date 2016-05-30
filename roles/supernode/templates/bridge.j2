@@ -1,0 +1,38 @@
+iface br0 inet manual
+  bridge-ports bat0
+  bridge_fd 0
+  bridge_stp off
+  bridge_waitport 0
+  ## Bring up interface
+  pre-up brctl addbr $IFACE
+  pre-up ip link set address {{ mac_batbone }} dev $IFACE
+  pre-up brctl addif $IFACE eth2
+  post-up ip link set dev $IFACE up
+  # Anycast for IPv6 routing and DNS resolving
+  post-up sysctl -w net.ipv6.conf.$IFACE.accept_dad=0
+  post-up sysctl -w net.ipv6.conf.$IFACE.dad_transmits=0
+  post-up sysctl -w net.ipv6.conf.$IFACE.optimistic_dad=0
+  # Increase multicast hash table size
+  post-up echo 2048 > /sys/class/net/$IFACE/bridge/hash_max
+  #Disabling autoconf wont work here?
+  #post-up sysctl -w net.ipv6.conf.$IFACE.autconf=0
+  # Remove old addresses
+  post-up ip addr flush dev $IFACE
+  post-up ip -6 addr flush dev $IFACE
+  # Add IPv6 addresses
+  post-up ip -6 addr add fe80::1/64 dev $IFACE
+  post-up ip -6 addr add {{ gateway_ip6 }} dev $IFACE
+  post-up ip -6 addr add {{ anycast_ipv6 }} dev $IFACE
+  # Add IPv4 address
+  post-up ip addr add {{ gateway_ip }} dev $IFACE
+  ## Tear down interface
+  # Delete interface addresses
+  pre-down ip -6 addr flush dev $IFACE
+  pre-down ip addr flush dev $IFACE
+  # Shutdown interface
+  pre-down ip link set dev $IFACE down 
+  down brctl delbr $IFACE
+
+iface eth1 inet manual
+  post-up batctl if add eth1
+  pre-down batctl if del eth1

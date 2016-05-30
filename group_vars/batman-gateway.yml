@@ -1,0 +1,7 @@
+---
+
+anycast_ipv6: "2a03:2260:3004:25::10/128"
+batman:
+  interval: 5000
+loopback_addresses:
+  - 127.0.1.1

@@ -1,0 +1,19 @@
+---
+
+- name: Install packages
+  apt: name={{ item }} state=present
+  with_items:
+    - batctl
+    - bridge-utils
+
+- name: Add kernel module
+  modprobe: name=batman-adv state=present
+
+- name: Configure kernel module
+  lineinfile: dest=/etc/modules-load.d/batman.conf line=batman-adv create=yes
+
+- name: Configure freifunk bridge
+  template: "src=bridge.j2 dest=/etc/network/interfaces.d/br0"
+
+- name: Configure static batman interface
+  template: "src=supernode-dummy.j2 dest=/etc/network/interfaces.d/supernode"

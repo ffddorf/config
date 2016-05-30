@@ -1,0 +1,6 @@
+---
+
+- name: Configure batman gateway endpoint
+  hosts: batman-gateway
+  roles:
+  - { role: supernode }

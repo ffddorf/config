@@ -1,0 +1,31 @@
+---
+
+- name: Disable reverse path filter
+  sysctl: name=net.ipv4.conf.all.rp_filter value=0 state=present sysctl_file=/etc/sysctl.d/60-rp_filter.conf
+
+# anycast routing won't work correctly without this
+- name: Disable duplicate address detection (sending)
+  sysctl: name=net.ipv6.conf.br0.dad_transmits value=0 state=present ignoreerrors=1 sysctl_file=/etc/sysctl.d/dad.conf
+
+# anycast routing won't work correctly without this
+- name: Disable duplicate address detection (receiving)
+  sysctl: name=net.ipv6.conf.br0.accept_dad value=0 state=present ignoreerrors=1 sysctl_file=/etc/sysctl.d/dad.conf
+
+- name: Increase memory limit for neighbor tables on client bridge
+  sysctl: "name=net.{{ item.prot }}.neigh.default.{{ item.key }} value={{ item.value }} state=present sysctl_file=/etc/sysctl.d/gc_thresh.conf"
+  with_items:
+    - { prot: ipv4, key: gc_thresh1, value: 1024 }
+    - { prot: ipv4, key: gc_thresh2, value: 2048 }
+    - { prot: ipv4, key: gc_thresh3, value: 4096 }
+    - { prot: ipv6, key: gc_thresh1, value: 1024 }
+    - { prot: ipv6, key: gc_thresh2, value: 2048 }
+    - { prot: ipv6, key: gc_thresh3, value: 4096 }
+
+- name: Configure routing
+  sysctl: "name={{ item.key }} value={{ item.value }} state=present sysctl_file=/etc/sysctl.d/routing.conf"
+  with_items:
+    - { key: net.ipv4.ip_forward, value: 1 }
+    - { key: net.ipv4.conf.all.rp_filter, value: 0 }
+    - { key: net.ipv6.conf.all.forwarding, value: 1 }
+    - { key: net.ipv6.conf.all.accept_ra, value: 0 }
+    - { key: net.ipv6.conf.all.forwarding, value: 1 }
