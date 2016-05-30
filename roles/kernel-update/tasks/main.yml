@@ -1,0 +1,14 @@
+---
+
+- name: Add backports repo
+  lineinfile: dest=/etc/apt/sources.list line="deb http://mirror.hetzner.de/debian/packages jessie-backports main"
+
+- name: Pin backports version for kernel
+  copy: src=kernel-image dest=/etc/apt/preferences.d/linux-image
+
+- name: Update package caches
+  apt: update_cache=yes
+
+- name: Install required kernel
+  apt: name=linux-image-amd64 state=latest
+  notify: restart machine

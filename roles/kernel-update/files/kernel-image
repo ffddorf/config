@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+
+Package: linux-image-*
+Pin: release a=jessie-backports
+Pin-Priority: 1000
