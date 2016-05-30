@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+
+# suppress wpad DHCPINFORM requests from MSFT devices
+# See https://lists.isc.org/pipermail/dhcp-users/2013-September/017193.html
+option wpad code 252 = text;
+option wpad "\n\000";
+class "MSFT" {
+  match if substring(option vendor-class-identifier, 0, 4) = "MSFT";
+  option dhcp-parameter-request-list = concat(option dhcp-parameter-request-list, fc);
+}
+
+ddns-update-style none;
+option domain-name ".local";
+default-lease-time 900;
+max-lease-time 7200;
+subnet {{ gateway_ip | ipaddr('network') }} netmask {{ gateway_ip | ipaddr('netmask') }} {
+    authoritative;
+    {% for range in dhcp_ranges %}
+    range {{ range.start_address }} {{ range.end_address }};
+    {% endfor %}
+    append dhcp-parameter-request-list 1,3,6,12,15,26,28,51,54;
+    option domain-name-servers {{ gateway_ip | ipaddr('address')}};
+    option routers {{ gateway_ip | ipaddr('address')}};
+    option interface-mtu 1336;
+}
