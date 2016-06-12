@@ -1,0 +1,6 @@
+---
+
+- name: configure ntp server
+  hosts: core
+  roles:
+  - { role: ntp, tags: ntp }
