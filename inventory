@@ -24,6 +24,7 @@ core03.freifunk-duesseldorf.de syscontact=noamster syslocation="OVH, Roubaix" se
 
 [site-edgeos]
 garagebilk.site.freifunk-duesseldorf.de seq=2 siteip=94.79.144.124 ansible_transport=paramiko
+office-michael.site.freifunk-duesseldorf.de seq=3 siteip=80.147.200.123 ansible_transport=paramiko
 
 [observium]
 observium.freifunk-duesseldorf.de syscontact=nomaster syslocation="Hetzner, Falkenstein/Vogtland" ansible_ssh_user=root
